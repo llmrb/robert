@@ -13,4 +13,12 @@ module Robert
       Tools::ManSearch,
     ]
   end
+
+  ##
+  # @return [String]
+  def self.boot_message
+    Command.new("fortune", "freebsd-tips").stdout.to_s.strip
+  rescue
+    ""
+  end
 end

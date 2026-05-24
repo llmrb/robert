@@ -25,12 +25,15 @@ module Robert
       ui.root = TUI::VBox.new
       ui.body = TUI::HBox.new
       ui.left_fill = fill(width: 0.2)
+      ui.center = Widgets::Pane.new(width: 0.6)
       ui.chat = chat
+      ui.banner = banner
       ui.right_fill = fill(width: 0.2)
       ui.status = status_bar(llm)
       ui.input = TUI::Input.new(height: 3, fg: :default, bg: :default, valign: :middle)
+      ui.center.show(ui.banner)
       ui.body.add(ui.left_fill)
-      ui.body.add(ui.chat)
+      ui.body.add(ui.center)
       ui.body.add(ui.right_fill)
       ui.root.add(ui.body)
       ui.root.add(ui.status)
@@ -46,10 +49,18 @@ module Robert
 
     def chat
       TUI::Chat.new(
-        width: 0.6,
         roles: true,
         assistant_fg: :red,
         labels: {user: "You", assistant: "Robert"}
+      )
+    end
+
+    def banner
+      Widgets::Splash.new(
+        "FreeBSD Tip:",
+        Robert.boot_message,
+        fg: :white,
+        bg: :default
       )
     end
 

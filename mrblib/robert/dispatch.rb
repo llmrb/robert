@@ -42,6 +42,7 @@ module Robert
     def on_submit(_event)
       return if ui.input.empty?
       message = ui.input.value
+      ui.center.show(ui.chat) unless showing_chat?
       agent.stream.clear
       ui.input.clear
       ui.chat.add(:user, message)
@@ -68,6 +69,10 @@ module Robert
 
     def redraw!
       TUI.draw(ui.root)
+    end
+
+    def showing_chat?
+      ui.chat.parent == ui.center
     end
   end
 end
