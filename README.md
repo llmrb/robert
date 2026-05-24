@@ -14,6 +14,10 @@ native, 2MB FreeBSD binary. It currently requires
 DeepSeek because it is almost free to use but
 _it could_ also work with other providers.
 
+## Cast
+
+[![asciicast](https://asciinema.org/a/WSB4P4DCiG91325y.svg)](https://asciinema.org/a/WSB4P4DCiG91325y)
+
 ## Appearance
 
 **Boot**
