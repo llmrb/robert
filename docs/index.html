@@ -1,0 +1,148 @@
+---
+layout: default
+title: Robert
+description: A 2MB FreeBSD AI assistant that reads and searches man pages
+---
+
+<section class="hero">
+  <div class="container">
+    <div class="size-badge">2MB binary</div>
+    <h1>Robert</h1>
+    <p class="subtitle">
+      A native FreeBSD AI assistant. Reads man pages, searches documentation,
+      and helps you troubleshoot &mdash; all in a 2MB standalone binary.
+    </p>
+    <a class="install" href="https://github.com/llmrb/robert/releases/latest">
+      <span>Download from GitHub Releases</span>
+      <span class="arrow">&rarr;</span>
+    </a>
+  </div>
+</section>
+
+<section>
+  <div class="container-wide">
+    <div class="asciicast">
+      <script src="https://asciinema.org/a/WSB4P4DCiG91325y.js" id="asciicast-WSB4P4DCiG91325y" async="true"></script>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container-wide">
+    <div class="slideshow">
+      <input type="radio" name="slide" id="slide-1" checked>
+      <input type="radio" name="slide" id="slide-2">
+      <input type="radio" name="slide" id="slide-3">
+      <input type="radio" name="slide" id="slide-4">
+
+      <div class="slides">
+        <div class="slide slide-1">
+          <img src="../robert1.png" alt="Robert boot screen showing a FreeBSD tip from fortune freebsd-tips">
+        </div>
+        <div class="slide slide-2">
+          <img src="../robert2.png" alt="Robert responding to a simple greeting">
+        </div>
+        <div class="slide slide-3">
+          <img src="../robert3.png" alt="Robert answering a question using man pages">
+        </div>
+        <div class="slide slide-4">
+          <img src="../robert4.png" alt="Robert asking for confirmation before reading a file">
+        </div>
+      </div>
+
+      <div class="nav">
+        <label class="nav-1" for="slide-1"></label>
+        <label class="nav-2" for="slide-2"></label>
+        <label class="nav-3" for="slide-3"></label>
+        <label class="nav-4" for="slide-4"></label>
+      </div>
+
+      <p class="caption">
+        Boot &middot; Greet &middot; Answer &middot; Confirm
+      </p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <h2>Built for FreeBSD</h2>
+    <div class="features">
+      <div class="feature">
+        <h3>2MB</h3>
+        <p>No Ruby runtime, no gems, no dependencies. Just a native binary you download and run.</p>
+      </div>
+      <div class="feature">
+        <h3>Man page native</h3>
+        <p>Robert uses <code>man</code> and <code>apropos</code> directly. Answers are sourced from your system's documentation.</p>
+      </div>
+      <div class="feature">
+        <h3>Tool confirmation</h3>
+        <p>Reading files requires approval. Man page search doesn't. Sensible defaults that respect your privacy.</p>
+      </div>
+      <div class="feature">
+        <h3>Streaming responses</h3>
+        <p>Output appears as it's generated, with real-time status updates for tool calls.</p>
+      </div>
+      <div class="feature">
+        <h3>Powered by <a href="https://github.com/llmrb/llm.rb" style="color: inherit; text-decoration: underline; text-underline-offset: 2px;">llm.rb</a></h3>
+        <p>Built on llm.rb's mruby runtime. The same agent, streaming, and tool architecture in a standalone binary.</p>
+      </div>
+      <div class="feature">
+        <h3>DeepSeek</h3>
+        <p>Uses DeepSeek by default because it's almost free. Could work with any OpenAI-compatible provider.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <h2>Three tools</h2>
+    <div class="tools-grid">
+      <div class="tool-card">
+        <div class="tool-name">man-page</div>
+        <div class="tool-desc">Read a man page by name and optional section.</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-name">man-search</div>
+        <div class="tool-desc">Search the man page database with apropos.</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-name">read-file</div>
+        <div class="tool-desc">Read a text file on the system.</div>
+        <div class="tool-confirm">requires confirmation</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <h2>Details</h2>
+    <div class="details-list">
+      <div class="detail-item">
+        <strong>License</strong> &mdash; 0BSD. Do whatever you want.
+      </div>
+      <div class="detail-item">
+        <strong>Build</strong> &mdash; CI builds on FreeBSD via GitHub Actions.
+      </div>
+      <div class="detail-item">
+        <strong>Stack</strong> &mdash; mruby-llm + mruby-tui + mruby-markdown.
+      </div>
+      <div class="detail-item">
+        <strong>Status</strong> &mdash; Early but functional.
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <a href="https://github.com/llmrb/robert">GitHub</a>
+    &nbsp;&middot;&nbsp;
+    <a href="https://github.com/llmrb/llm.rb">llm.rb</a>
+    &nbsp;&middot;&nbsp;
+    0BSD license
+  </div>
+</footer>
