@@ -30,8 +30,10 @@ TOOLCHAIN_STAMP = tmp/toolchain.$(BUILD).stamp
 
 .if ${BUILD} == "production"
 MRBC_FLAGS = --remove-lv
+POST_BUILD = strip $(STANDALONE_BIN)
 .else
 MRBC_FLAGS =
+POST_BUILD = true
 .endif
 
 .PHONY: all toolchain standalone clean distclean
@@ -70,6 +72,7 @@ $(STANDALONE_BIN): $(STANDALONE_OBJ) $(STANDALONE_IREP) $(TOOLCHAIN_STAMP) $(STA
 		$(BUILD_DIR)/lib/libmruby.a \
 		$$(bin/mruby-config --ldflags) \
 		$$(bin/mruby-config --libs | sed 's/-lmruby//g')
+	$(POST_BUILD)
 	chmod 755 $(STANDALONE_BIN)
 
 $(PROMPT_OUT): $(PROMPT_IN) $(PROMPT_SRC)
