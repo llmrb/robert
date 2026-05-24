@@ -35,6 +35,13 @@ Question answered from the FreeBSD man pages.
 
 ![robert3.png](robert3.png)
 
+**Tool confirmation**
+
+No confirmation required to read, or search man pages. <br>
+Confirmation required to read files.
+
+![robert4.png](robert4.png)
+
 ## License
 
-0BSD. See [LICEBSE](LICENSE).
+0BSD. See [LICENSE](LICENSE).
