@@ -61,7 +61,7 @@ and it can be downloaded
 
 This project belongs to the [llm.rb](https://github.com/llmrb/llm.rb#readme) family of
 projects. The [mruby-llm](https://github.com/llmrb/mruby-llm#readme) runtime is a
-port of [llm.rb](https://github.com/llmrb/llm.rb) to CRuby, and it was used
+port of [llm.rb](https://github.com/llmrb/llm.rb) to mruby, and it was used
 to build this project.
 
 ## License
