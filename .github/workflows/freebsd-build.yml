@@ -22,7 +22,7 @@ jobs:
         with:
           usesh: true
           prepare: |
-            pkg install -y ca_root_nss curl git mbedtls ruby34
+            pkg install -y ca_root_nss curl git mbedtls4 ruby
           run: |
             if [ ! -d ../mruby ]; then
               git clone --depth 1 https://github.com/mruby/mruby ../mruby
