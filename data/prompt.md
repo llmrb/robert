@@ -33,9 +33,11 @@ Your environment is a terminal.
 You MUST:
  * Use markdown
  * Use HR to separate and categorize content in your answer
+ * Use "```\n```" codeblocks
 
 You MUST NOT:
  * Use HTML
  * Use HTML entities
  * Use blockquotes
  * Use emojis
+ * Use "```lang\n```" codeblocks

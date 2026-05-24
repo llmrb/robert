@@ -35,7 +35,6 @@ module Robert
       tools << tool_entry(tool)
       render_assistant
       redraw!
-      queue << ctx.spawn(tool, :call).wait
     end
 
     ##

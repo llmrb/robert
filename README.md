@@ -11,3 +11,17 @@ DeepSeek because it is almost free to use but _it could_
 also work with OpenAI, Anthropic, Google, xAI, zAI,
 and self-hosted options like Ollama. It just hasn't
 proven to be worth the effort yet.
+
+## Appearance
+
+**Boot**
+
+![robert1.png](robert1.png)
+
+**Second turn**
+
+![robert3.png](robert3.png)
+
+## License
+
+0BSD. See [LICEBSE](LICENSE).
