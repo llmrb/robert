@@ -51,9 +51,10 @@ See a live demo at [asciinema.org](https://asciinema.org/a/WSB4P4DCiG91325y)
 
 ## Install
 
-A GitHub action builds a binary from the repository's source code
-and it is run every time a commit is pushed to the repository.
-The binary is roughly 1.78MB in size, and it can be downloaded
+[GitHub builds a binary](.github/workflows/freebsd-build.yml) from
+the repository's source code and it is run every time a commit is
+pushed to the repository. The binary is roughly 1.78MB in size,
+and it can be downloaded
 [here](https://github.com/llmrb/robert/releases/tag/latest).
 
 ## License
