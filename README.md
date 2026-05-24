@@ -14,9 +14,6 @@ native, 2MB FreeBSD binary. It currently requires
 DeepSeek because it is almost free to use but
 _it could_ also work with other providers.
 
-## Cast
-
-[![asciicast](https://asciinema.org/a/WSB4P4DCiG91325y.svg)](https://asciinema.org/a/WSB4P4DCiG91325y)
 
 ## Appearance
 
@@ -45,6 +42,10 @@ No confirmation required to read, or search man pages. <br>
 Confirmation required to read files.
 
 ![robert4.png](robert4.png)
+
+## ASCIICast
+
+[![asciicast](https://asciinema.org/a/WSB4P4DCiG91325y.svg)](https://asciinema.org/a/WSB4P4DCiG91325y)
 
 ## License
 
