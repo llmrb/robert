@@ -8,7 +8,7 @@ builds:
     https://github.com/mrbgemz/mruby-tui:
       url: https://github.com/mrbgemz/mruby-tui
       branch: main
-      commit: 6870fadafbf639045b9ba31994720b67f6bdd643
+      commit: a44164c627ae6bd3dede699b0fc37d41493be30a
       version: 0.1.0
     https://github.com/mrbgemz/mruby-tui-chat:
       url: https://github.com/mrbgemz/mruby-tui-chat
