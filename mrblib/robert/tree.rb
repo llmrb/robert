@@ -59,7 +59,7 @@ module Robert
       Widgets::Splash.new(
         "FreeBSD Tip:",
         Robert.boot_message,
-        fg: Theme::FG_PRIMARY,
+        fg: Theme::FG_SECONDARY,
         bg: Theme::BG_DEFAULT
       )
     end
