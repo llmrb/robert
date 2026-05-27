@@ -21,8 +21,12 @@ description: Robert is a FreeBSD AI assistant you can download as a standalone 2
 
 <section>
   <div class="container-wide">
-    <div class="asciicast">
-      <script src="https://asciinema.org/a/WSB4P4DCiG91325y.js" id="asciicast-WSB4P4DCiG91325y" async="true"></script>
+    <div class="asciicast-wrap is-loading">
+      <div class="asciicast-header">
+        <span>Robert</span>
+        <span>FreeBSD terminal session</span>
+      </div>
+      <div class="asciicast" id="asciicast-container"></div>
     </div>
   </div>
 </section>
@@ -146,3 +150,63 @@ description: Robert is a FreeBSD AI assistant you can download as a standalone 2
     0BSD license
   </div>
 </footer>
+
+<script>
+  (function() {
+    var castUrl = 'https://asciinema.org/a/WSB4P4DCiG91325y.cast';
+    var container = document.getElementById('asciicast-container');
+    if (!container || typeof AsciinemaPlayer === 'undefined') return;
+    var wrapper = container.closest('.asciicast-wrap');
+
+    function createPlayer(size) {
+      var player = AsciinemaPlayer.create(
+        castUrl,
+        container,
+        {
+          controls: true,
+          autoPlay: false,
+          preload: true,
+          fit: 'width',
+          cols: size.width,
+          rows: size.height,
+          terminalLineHeight: 1.2
+        }
+      );
+
+      player.addEventListener('playing', function() {
+        if (window.__robertAudio) window.__robertAudio.start();
+      });
+
+      player.addEventListener('pause', function() {
+        if (window.__robertAudio) window.__robertAudio.stop();
+      });
+
+      player.addEventListener('ended', function() {
+        if (window.__robertAudio) window.__robertAudio.stop();
+      });
+
+      window.requestAnimationFrame(function() {
+        wrapper.classList.remove('is-loading');
+      });
+    }
+
+    function castSize() {
+      return fetch(castUrl)
+        .then(function(response) {
+          if (!response.ok) throw new Error('cast request failed');
+          return response.text();
+        })
+        .then(function(text) {
+          var header = JSON.parse(text.split('\n', 1)[0]);
+          return {
+            width: header.width,
+            height: header.height
+          };
+        });
+    }
+
+    castSize().then(createPlayer).catch(function() {
+      createPlayer({width: 80, height: 24});
+    });
+  })();
+</script>

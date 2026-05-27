@@ -26,7 +26,9 @@
   <meta name="twitter:image" content="{{ social_image }}">
 
   <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+  <link rel="stylesheet" href="https://unpkg.com/asciinema-player@3/dist/bundle/asciinema-player.css">
   <link rel="icon" href="data:,">
+  <script src="https://unpkg.com/asciinema-player@3/dist/bundle/asciinema-player.js"></script>
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -51,5 +53,61 @@
 <body>
   <a class="github-ribbon" href="https://github.com/llmrb/robert#readme" target="_blank" rel="noopener">Fork me on GitHub</a>
   {{ content }}
+  <script>
+    (function() {
+      var audioCtx = null;
+
+      function ctx() {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        return audioCtx;
+      }
+
+      function beep(freq, t, dur, type, vol) {
+        var c = ctx();
+        var o = c.createOscillator();
+        var g = c.createGain();
+        o.type = type || 'square';
+        o.frequency.setValueAtTime(freq, t);
+        g.gain.setValueAtTime(0.001, t);
+        g.gain.exponentialRampToValueAtTime(vol || 0.12, t + 0.01);
+        g.gain.exponentialRampToValueAtTime(0.001, t + dur);
+        o.connect(g);
+        g.connect(c.destination);
+        o.start(t);
+        o.stop(t + dur);
+      }
+
+      // Quick terminal connect: DTMF tones -> arpeggio
+      function playConnect() {
+        var c = ctx();
+        var t = c.currentTime;
+        beep(697, t, 0.07, 'square', 0.1);
+        beep(770, t + 0.07, 0.07, 'square', 0.1);
+        beep(852, t + 0.14, 0.07, 'square', 0.1);
+        beep(941, t + 0.21, 0.07, 'square', 0.1);
+        beep(1200, t + 0.28, 0.12, 'sawtooth', 0.08);
+        beep(523, t + 0.36, 0.09, 'square', 0.1);
+        beep(659, t + 0.44, 0.09, 'square', 0.1);
+        beep(784, t + 0.52, 0.09, 'square', 0.1);
+        beep(1047, t + 0.60, 0.3, 'triangle', 0.1);
+      }
+
+      // Quick power-down
+      function playDisconnect() {
+        var c = ctx();
+        var t = c.currentTime;
+        beep(880, t, 0.05, 'square', 0.08);
+        beep(660, t + 0.05, 0.05, 'square', 0.08);
+        beep(440, t + 0.10, 0.05, 'square', 0.08);
+        beep(220, t + 0.15, 0.25, 'sawtooth', 0.06);
+      }
+
+      window.__robertAudio = {
+        start: playConnect,
+        stop: playDisconnect
+      };
+    })();
+  </script>
 </body>
 </html>
