@@ -26,7 +26,7 @@ module Robert::Widgets
       result = @queue.pop == :allow ?
         tool.spawn(strategy).wait :
         tool.cancel(reason: "user denied tool execution")
-      finish(tool, result)
+      ui.stream.on_tool_return(tool, result)
       result
     ensure
       ui.stream.task_queue.push ["confirmation_done", nil]
@@ -57,7 +57,7 @@ module Robert::Widgets
     def prompt
       case tool.name
       when "read-file"
-        "Allow robert to read #{argument(:path)}?"
+        "Allow robert to read #{tool.arguments.path} ?"
       else
         "Allow robert to run #{tool.name}?"
       end
@@ -71,15 +71,6 @@ module Robert::Widgets
       return if @resolved
       @resolved = true
       @queue.push(decision)
-    end
-
-    def finish(tool, result)
-      ui.stream&.on_tool_return(tool, result) if ui.respond_to?(:stream)
-    end
-
-    def argument(key)
-      arguments = tool.arguments || {}
-      arguments[key] || arguments[key.to_s] || "(unknown)"
     end
   end
 end

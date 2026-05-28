@@ -162,7 +162,7 @@ module Robert
         page = "#{page}(#{fn.arguments.section})" if fn.arguments.section
         "• Read man page: #{page}"
       else
-        "• #{fn.name}"
+        "• call: #{fn.name}"
       end
     end
 
@@ -175,7 +175,7 @@ module Robert
         page = "#{page}(#{fn.arguments.section})" if fn.arguments.section
         "• Read man page: #{page}"
       else
-        "• #{tool.name}"
+        "• done: #{fn.name}"
       end
     end
 
