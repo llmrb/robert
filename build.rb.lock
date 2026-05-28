@@ -2,7 +2,7 @@
 mruby:
   version: 4.0.0
   release_no: 40000
-  git_commit: b1adab4e87659dc880d8bcc60a1134ace14124c1
+  git_commit: d2a1c43a5f766a18dcb609e80839483caf8fabad
 builds:
   robert:
     https://github.com/mrbgemz/mruby-tui:
@@ -22,9 +22,9 @@ builds:
       version: 0.1.0
     https://github.com/llmrb/mruby-llm:
       url: https://github.com/llmrb/mruby-llm
-      branch: main
-      commit: 933a84071ca69f633f8b0b74df4accd4880aea93
-      version: 0.1.0.beta
+      branch: v0.1.0.beta.2
+      commit: 9af26fb543758cd903f867619a27a683eeceb7fa
+      version: 0.1.0.beta.2
     https://github.com/0x1eef/mruby-command:
       url: https://github.com/0x1eef/mruby-command
       branch: main
@@ -42,9 +42,9 @@ builds:
       version: 0.0.0
     https://github.com/llmrb/mruby-curl.git:
       url: https://github.com/llmrb/mruby-curl.git
-      branch: master
-      commit: 15c8d98e31a41bb80ba30444210c0861904e1c07
-      version: 0.0.0
+      branch: v0.2.0
+      commit: 7a0d0eecdbc7e258d4bd06694a0214354c1e3ccb
+      version: 0.2.0
     https://github.com/mattn/mruby-json.git:
       url: https://github.com/mattn/mruby-json.git
       branch: master

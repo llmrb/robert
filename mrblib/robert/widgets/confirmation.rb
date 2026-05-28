@@ -4,12 +4,16 @@ module Robert::Widgets
   ##
   # {Confirmation} renders an inline status-bar confirmation prompt.
   class Confirmation
+    HINT = "[Enter/y] allow [n/Esc] deny"
+
     ##
     # @param [LLM::Object] ui
     # @param [LLM::Function] tool
     def initialize(ui, tool)
       @ui = ui
       @tool = tool
+      @queue = Task::Queue.new
+      @resolved = false
     end
 
     ##
@@ -18,40 +22,38 @@ module Robert::Widgets
     # @param [Symbol] strategy
     # @return [LLM::Function::Return]
     def confirm(strategy)
-      previous_left = status_bar.left
-      previous_right = status_bar.right
-      status_bar.left = prompt
-      status_bar.right = "[Enter/y] allow [n/Esc] deny"
-      redraw!
-      loop do
-        event = TUI.read_event
-        if event.key?(:CTRL_C)
-          throw(:breakout)
-        elsif event.key?(:ESC) || event.ch == ?n.ord || event.ch == ?N.ord
-          result = tool.cancel(reason: "user denied tool execution")
-          finish(tool, result, previous_left, previous_right)
-          return result
-        elsif event.key?(:ENTER) || event.ch == ?y.ord || event.ch == ?Y.ord
-          result = tool.spawn(strategy).wait
-          finish(tool, result, "Thinking...", "")
-          return result
-        elsif event.event?(:RESIZE)
-          redraw!
-        end
-      end
+      ui.stream.task_queue.push ["confirmation", self]
+      result = @queue.pop == :allow ?
+        tool.spawn(strategy).wait :
+        tool.cancel(reason: "user denied tool execution")
+      finish(tool, result)
+      result
+    ensure
+      ui.stream.task_queue.push ["confirmation_done", nil]
     end
 
-    private
-
-    attr_reader :ui, :tool
-
-    def finish(tool, result, left, right)
-      ui.stream&.on_tool_return(tool, result) if ui.respond_to?(:stream)
-      status_bar.left = left
-      status_bar.right = right
-      redraw!
+    ##
+    # Approve the pending tool call.
+    # @return [void]
+    def allow
+      resolve(:allow)
     end
 
+    ##
+    # Deny the pending tool call.
+    # @return [void]
+    def deny
+      resolve(:deny)
+    end
+
+    ##
+    # @return [String]
+    def hint
+      HINT
+    end
+
+    ##
+    # @return [String]
     def prompt
       case tool.name
       when "read-file"
@@ -61,17 +63,23 @@ module Robert::Widgets
       end
     end
 
+    private
+
+    attr_reader :ui, :tool
+
+    def resolve(decision)
+      return if @resolved
+      @resolved = true
+      @queue.push(decision)
+    end
+
+    def finish(tool, result)
+      ui.stream&.on_tool_return(tool, result) if ui.respond_to?(:stream)
+    end
+
     def argument(key)
       arguments = tool.arguments || {}
       arguments[key] || arguments[key.to_s] || "(unknown)"
-    end
-
-    def redraw!
-      TUI.draw(ui.root)
-    end
-
-    def status_bar
-      ui.status
     end
   end
 end

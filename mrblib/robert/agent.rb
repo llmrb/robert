@@ -13,6 +13,10 @@ module Robert
 
     attr_accessor :ui
 
+    def queue
+      stream.task_queue
+    end
+
     def on_tool_confirmation(tool, strategy)
       raise "Agent UI is not configured" unless ui
       Widgets::Confirmation.new(ui, tool).confirm(strategy)

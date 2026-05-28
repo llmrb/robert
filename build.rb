@@ -9,7 +9,7 @@ MRuby::Build.new("robert") do |conf|
   conf.gem git: "https://github.com/mrbgemz/mruby-tui"      , branch: "main"
   conf.gem git: "https://github.com/mrbgemz/mruby-tui-chat" , branch: "main"
   conf.gem git: "https://github.com/mrbgemz/mruby-markdown" , branch: "main"
-  conf.gem git: "https://github.com/llmrb/mruby-llm"        , branch: "main"
+  conf.gem git: "https://github.com/llmrb/mruby-llm"        , branch: "v0.1.0.beta.2"
   conf.gem git: "https://github.com/0x1eef/mruby-command"   , branch: "main"
   conf.gem File.expand_path(__dir__)
 

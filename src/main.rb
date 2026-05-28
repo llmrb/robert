@@ -14,24 +14,26 @@ def main(argv)
 
   llm       = LLM.deepseek(key: ENV["DEEPSEEK_SECRET"])
   ui        = Robert::Tree.build(llm)
-  ui.stream = Robert::Stream.new(ui)
+  ui.stream = Robert::Stream.new Task::Queue.new
   agent     = Robert::Agent.new(llm, stream: ui.stream)
   agent.ui  = ui
   dispatch  = Robert::Dispatch.new(LLM::Object.from(llm:, agent:, ui: agent.ui))
 
-  TUI.run(ui.root) do
-    Task.new(name: "event-loop") do
+  Task.new(name: "event-loop") do
+    TUI.run(ui.root) do
       TUI.draw(ui.root)
       catch(:breakout) do
         loop do
-          dispatch.tick(ui.root)
-          while event = TUI.peek_event(50)
+          if event = TUI.peek_event(0)
             dispatch.on_event(event)
           end
+          dispatch.tick(ui)
+          Task.pass
         end
       end
     end
-    Task.run
   end
+  Task.run
 end
+
 main(ARGV)

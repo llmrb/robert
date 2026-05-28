@@ -2,123 +2,191 @@
 
 module Robert
   class Dispatch
+    ##
+    # @param [LLM::Object] context
+    # @return [Robert::Dispatch]
     def initialize(context)
-      @ui = context.ui
-      @llm = context.llm
+      @ui    = context.ui
+      @llm   = context.llm
       @agent = context.agent
+      @buffer = +""
       @last_event = 0.0
-      @worker = nil
-      @stream_queue = nil
-      @stream_buffer = +""
-      @wakeup = Task::Queue.new
+      @task = nil
+      @confirmation = nil
+      @labels = []
     end
 
+    ##
+    # @param [Termbox2::Event<Robert::Event>]
+    # @return [void]
     def on_event(event)
       now = Time.now.to_f
       elapsed = now - @last_event
       @last_event = now
-
-      if event.key?(:CTRL_C) && @worker
-        @worker.terminate rescue nil
-        @worker = nil
-        @stream_queue = nil
-        status_bar.left = "Cancelled"
-        status_bar.right = Tree::HINTS
+      if confirmation
+        on_confirmation_event(event)
+      elsif event.key?(:CTRL_C) and task
+        interrupt
+        ui.status.left = "Cancelled"
+        ui.status.right = Tree::HINTS
+        redraw!
       elsif event.key?(:CTRL_C)
         throw(:breakout)
       elsif event.key?(:ENTER) && elapsed < 0.05
         ui.input.put("\n")
+        redraw!
       elsif event.key?(:ENTER)
         on_submit(event)
-        TUI.draw(ui.root)
       elsif event.ch == 0x0A
         ui.input.put("\n")
+        redraw!
       elsif TUI.backspace?(event.key)
         ui.input.backspace
+        redraw!
       elsif event.key?(:UP)
         ui.chat.scroll_up
+        redraw!
       elsif event.key?(:DOWN)
         ui.chat.scroll_down
+        redraw!
       elsif event.ch == 0x15
         ui.input.clear
+        redraw!
       elsif event.ch >= 0x20 && event.ch <= 0x7E
         ui.input.put(event.ch.chr)
+        redraw!
       elsif event.event?(:RESIZE)
-        TUI.draw(ui.root)
+        redraw!
       end
     end
 
-    def start_worker(prompt)
-      @stream_queue = Task::Queue.new
-      queue = @stream_queue
-      wakeup = @wakeup
-      llm = @llm
-      @worker = Task.new(name: "llm-worker") do
-        agent = Robert::Agent.new(llm, stream: Robert::QueueStream.new(queue))
-        begin
-          agent.talk(prompt)
-          queue.push("done")
-        rescue => ex
-          queue.push("error:#{ex.message}")
+    ##
+    # @param [LLM::Object] ui
+    # @return [void]
+    def tick(ui)
+      while event = pop_event
+        kind, data = event
+        case kind
+        when "content"
+          @buffer << data
+          ui.chat.append(:assistant, assistant_text)
+        when "tool_call"
+          @labels << tool_running_label(data)
+          ui.chat.replace_last(:assistant, assistant_text)
+        when "tool_return"
+          @labels << tool_finished_label(data)
+          ui.chat.replace_last(:assistant, assistant_text)
+        when "confirmation"
+          @confirmation = data
+          ui.status.left = data.prompt
+          ui.status.right = data.hint
+        when "confirmation_done"
+          @confirmation = nil
+          ui.status.left = "Thinking..."
+          ui.status.right = ""
+        when "done"
+          ui.status.left = "Idle"
+          ui.status.right = Tree::HINTS
+        when "cancel"
+          ui.status.left = "Cancelled"
+          return
+        when "error"
+          ui.chat.replace_last(:assistant, data)
         end
-        wakeup.push(nil)
       end
-    end
-
-    def tick(root)
-      if @worker
-        drain_stream_queue
-        if @worker.status == :DORMANT
-          status_bar.left = "Idle"
-          status_bar.right = Tree::HINTS
-          @worker = nil
-          @stream_queue = nil
-        end
+      if task&.status == :DORMANT
+        @task = nil
       end
-      TUI.draw(root)
+      TUI.draw(ui.root)
     end
 
     private
 
-    attr_reader :llm, :agent, :ui
+    attr_reader :llm, :agent, :task, :ui, :confirmation
 
-    def drain_stream_queue
-      return unless @stream_queue
-      loop do
-        msg = @stream_queue.pop(true) rescue nil
-        break unless msg
-        case msg
-        when /\Acontent:(.*)\z/m
-          @stream_buffer << $1
-        when /\Atool_call:(.*)\z/
-          ui.status.right = $1
-        when "done"
-          # will be handled in tick
-        when /\Aerror:(.*)\z/m
-          ui.chat.replace_last(:assistant, "Error: #{$1}")
-        end
-      end
-      if @stream_buffer
-        ui.chat.replace_last(:assistant, Markdown.new(@stream_buffer.rstrip).ast)
+    def assistant_text
+      Markdown.new([@labels.join("\n"), @buffer].join("\n")).ast
+    end
+
+    def pop_event
+      agent.queue.pop(true)
+    rescue Task::Error
+      nil
+    end
+
+    def on_confirmation_event(event)
+      if event.key?(:CTRL_C) || event.key?(:ESC) || event.ch == ?n.ord || event.ch == ?N.ord
+        confirmation.deny
+      elsif event.key?(:ENTER) || event.ch == ?y.ord || event.ch == ?Y.ord
+        confirmation.allow
+      elsif event.event?(:RESIZE)
+        redraw!
       end
     end
 
     def on_submit(_event)
       return if ui.input.empty?
+      @buffer = +""
+      @labels = []
       message = ui.input.value
       ui.center.show(ui.chat) unless showing_chat?
-      agent.stream.clear
       ui.input.clear
-      @stream_buffer = +""
       ui.chat.add(:user, message)
       ui.chat.add(:assistant, "")
-      status_bar.left = "Thinking..."
-      status_bar.right = ""
-      start_worker(message)
+      ui.status.left = "Thinking..."
+      ui.status.right = ""
+      _agent = agent
+      @task = Task.new(name: "agent") do
+        _agent.talk(message)
+        _agent.queue.push ["done", nil]
+      rescue LLM::Interrupt
+        _agent.queue.push ["cancel", nil]
+      end
+      TUI.draw(ui.root)
     end
 
-    def status_bar
-      ui.status
+    def terminate(task)
+      task.terminate
+    rescue
+      nil
+    ensure
+      @task = nil
+    end
+
+    def tool_running_label(fn)
+      case fn.name
+      when "man-search"
+        "• Search man page database: #{fn.arguments.keywords.join(", ")}"
+      when "man-page"
+        page = fn.arguments.name
+        page = "#{page}(#{fn.arguments.section})" if fn.arguments.section
+        "• Read man page: #{page}"
+      else
+        "• #{fn.name}"
+      end
+    end
+
+    def tool_finished_label(fn)
+      case fn.name
+      when "man-search"
+        "• Searched man page database (#{fn.arguments.join(", ")})"
+      when "man-page"
+        page = fn.arguments.name
+        page = "#{page}(#{fn.arguments.section})" if fn.arguments.section
+        "• Read man page: #{page}"
+      else
+        "• #{tool.name}"
+      end
+    end
+
+    def interrupt
+      agent.interrupt!
+    rescue
+      terminate(task)
+    end
+
+    def redraw!
+      TUI.draw(ui.root)
     end
 
     def showing_chat?
