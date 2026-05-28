@@ -141,6 +141,8 @@ module Robert
         _agent.queue.push ["done", nil]
       rescue LLM::Interrupt
         _agent.queue.push ["cancel", nil]
+      rescue => e
+        _agent.queue.push ["error", "error: #{e.class}: #{e.message}"]
       end
       TUI.draw(ui.root)
     end
