@@ -22,9 +22,9 @@ builds:
       version: 0.1.0
     https://github.com/llmrb/mruby-llm:
       url: https://github.com/llmrb/mruby-llm
-      branch: v0.1.0.beta.2
-      commit: 9af26fb543758cd903f867619a27a683eeceb7fa
-      version: 0.1.0.beta.2
+      branch: v0.1.0.beta.3
+      commit: c88c43e78d437bf0e80e5790009576130d6861e8
+      version: 0.1.0.beta.3
     https://github.com/0x1eef/mruby-command:
       url: https://github.com/0x1eef/mruby-command
       branch: main
