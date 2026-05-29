@@ -32,8 +32,15 @@ def main(argv)
         end
       end
     end
+  rescue => err
+    crash(err)
   end
   Task.run
+end
+
+def crash(err)
+  puts "#{err.class}: #{err.message}"
+  err.backtrace.each { puts _1 }
 end
 
 main(ARGV)
