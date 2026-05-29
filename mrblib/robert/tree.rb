@@ -16,6 +16,7 @@ module Robert
   #   └── TextArea (height: 5)
   module Tree
     HINTS = "\u2191\u2193 scroll \u00b7 Ctrl+D exit"
+    CANCEL_HINT = "Ctrl+C to cancel"
 
     extend self
 

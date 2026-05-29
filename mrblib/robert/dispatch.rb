@@ -89,7 +89,7 @@ module Robert
         when "confirmation_done"
           @confirmation = nil
           ui.status.left = "Thinking..."
-          ui.status.right = ""
+          ui.status.right = Tree::CANCEL_HINT
         when "done"
           ui.status.left = "Idle"
           ui.status.right = Tree::HINTS
@@ -140,7 +140,7 @@ module Robert
       ui.chat.add(:user, message)
       ui.chat.add(:assistant, "")
       ui.status.left = "Thinking..."
-      ui.status.right = "Ctrl+C to cancel"
+      ui.status.right = Tree::CANCEL_HINT
       _agent = agent
       @task = Task.new(name: "agent") do
         _agent.talk(message)
