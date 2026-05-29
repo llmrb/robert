@@ -1,3 +1,21 @@
+<p align="center">
+  <img src="./robert.svg" width=500 height=140 alt="Robert logo">
+</p>
+<p align="center">
+  <a href="https://llmrb.github.io/robert">
+    <img src="https://img.shields.io/badge/docs-llmrb.github.io/robert-blue.svg" alt="Website">
+  </a>
+  <a href="https://opensource.org/license/0bsd">
+    <img src="https://img.shields.io/badge/License-0BSD-orange.svg" alt="License">
+  </a>
+  <a href="https://github.com/llmrb/robert/releases/tag/latest">
+    <img src="https://img.shields.io/badge/version-0.1.1-green.svg" alt="Version">
+  </a>
+  <a href="https://www.freebsd.org/">
+    <img src="https://img.shields.io/badge/FreeBSD-supported-brightgreen.svg" alt="FreeBSD">
+  </a>
+</p>
+
 ## About
 
 Robert is designed to help you learn about FreeBSD through its official
