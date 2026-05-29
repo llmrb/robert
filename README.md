@@ -2,7 +2,7 @@
 
 Robert is designed to help you learn about FreeBSD through its official
 documentation and man pages. It is distributed as a standalone, 2MB
-binary. The [website](https://llmrb.github.com/robert) provides a
+binary. The [website](https://llmrb.github.io/robert) provides a
 rich introduction with screenshots and a screencast.
 
 Robert requires DeepSeek, and it is almost free to use but
