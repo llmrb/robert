@@ -40,7 +40,7 @@ NGHTTP2_TARBALL = $(STATIC_DISTDIR)/nghttp2-$(NGHTTP2_VERSION).tar.xz
 NGHTTP2_SRCDIR  = $(STATIC_BUILDDIR)/nghttp2-$(NGHTTP2_VERSION)
 NGHTTP2_URL     = https://github.com/nghttp2/nghttp2/releases/download/v$(NGHTTP2_VERSION)/nghttp2-$(NGHTTP2_VERSION).tar.xz
 
-STATIC_CFLAGS   = -Os -ffunction-sections -fdata-sections -DNDEBUG
+STATIC_CFLAGS   = -O2 -ffunction-sections -fdata-sections -DNDEBUG
 STATIC_LDFLAGS  = -Wl,--gc-sections
 
 ENTRYPOINT = src/main.rb
