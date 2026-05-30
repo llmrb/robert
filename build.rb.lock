@@ -22,9 +22,9 @@ builds:
       version: 0.1.0
     https://github.com/llmrb/mruby-llm:
       url: https://github.com/llmrb/mruby-llm
-      branch: v0.1.0.beta.3
-      commit: c88c43e78d437bf0e80e5790009576130d6861e8
-      version: 0.1.0.beta.3
+      branch: v0.1.0.beta.4
+      commit: 109b4f49a87c252c40f0ec85077d0f7cbb2b8b01
+      version: 0.1.0.beta.4
     https://github.com/0x1eef/mruby-command:
       url: https://github.com/0x1eef/mruby-command
       branch: main
@@ -42,9 +42,9 @@ builds:
       version: 0.0.0
     https://github.com/llmrb/mruby-curl.git:
       url: https://github.com/llmrb/mruby-curl.git
-      branch: v0.2.0
-      commit: 7a0d0eecdbc7e258d4bd06694a0214354c1e3ccb
-      version: 0.2.0
+      branch: v0.3.0
+      commit: 9ff5a45512a3284765e0fceb89c940d19caffc60
+      version: 0.3.0
     https://github.com/mattn/mruby-json.git:
       url: https://github.com/mattn/mruby-json.git
       branch: master
