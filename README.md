@@ -6,7 +6,7 @@
     <img src="https://img.shields.io/badge/License-0BSD-orange.svg" alt="License">
   </a>
   <a href="https://github.com/llmrb/robert/releases/tag/latest">
-    <img src="https://img.shields.io/badge/version-0.1.1-green.svg" alt="Version">
+    <img src="https://img.shields.io/badge/version-0.2.0-green.svg" alt="Version">
   </a>
   <a href="https://www.freebsd.org/">
     <img src="https://img.shields.io/badge/FreeBSD-supported-brightgreen.svg" alt="FreeBSD">
