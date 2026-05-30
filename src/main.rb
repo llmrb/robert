@@ -24,11 +24,12 @@ def main(argv)
       TUI.draw(ui.root)
       catch(:breakout) do
         loop do
-          if event = TUI.peek_event(0)
+          if event = TUI.peek_event
             dispatch.on_event(event)
           end
           dispatch.tick(ui)
           Task.pass
+          sleep_ms 25
         end
       end
     end
