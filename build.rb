@@ -10,9 +10,11 @@ MRuby::Build.new("robert") do |conf|
   if static
     conf.linker.flags << [
       File.join(curldir, "lib", "libcurl.a"),
+      File.join(curldir, "lib", "libnghttp2.a"),
       File.join(curldir, "lib", "libmbedtls.a"),
       File.join(curldir, "lib", "libmbedx509.a"),
-      File.join(curldir, "lib", "libmbedcrypto.a")
+      File.join(curldir, "lib", "libmbedcrypto.a"),
+      "-pthread"
     ].join(" ")
   else
     conf.linker.flags << "-lcurl -lmbedtls"

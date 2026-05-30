@@ -21,6 +21,7 @@ MANPREFIX   ?= $(PREFIX)/man
 
 CURL_VERSION    ?= 8.20.0
 MBEDTLS_VERSION ?= 3.6.5
+NGHTTP2_VERSION ?= 1.69.0
 STATIC_PREFIX   ?= ${.CURDIR}/vendor/static
 STATIC_DISTDIR  ?= ${.CURDIR}/vendor/dist
 STATIC_BUILDDIR ?= ${.CURDIR}/vendor/build
@@ -35,6 +36,9 @@ CURL_URL        = https://curl.se/download/curl-$(CURL_VERSION).tar.xz
 MBEDTLS_TARBALL = $(STATIC_DISTDIR)/mbedtls-$(MBEDTLS_VERSION).tar.bz2
 MBEDTLS_SRCDIR  = $(STATIC_BUILDDIR)/mbedtls-$(MBEDTLS_VERSION)
 MBEDTLS_URL     = https://github.com/Mbed-TLS/mbedtls/releases/download/mbedtls-$(MBEDTLS_VERSION)/mbedtls-$(MBEDTLS_VERSION).tar.bz2
+NGHTTP2_TARBALL = $(STATIC_DISTDIR)/nghttp2-$(NGHTTP2_VERSION).tar.xz
+NGHTTP2_SRCDIR  = $(STATIC_BUILDDIR)/nghttp2-$(NGHTTP2_VERSION)
+NGHTTP2_URL     = https://github.com/nghttp2/nghttp2/releases/download/v$(NGHTTP2_VERSION)/nghttp2-$(NGHTTP2_VERSION).tar.xz
 
 STATIC_CFLAGS   = -Os -ffunction-sections -fdata-sections -DNDEBUG
 STATIC_LDFLAGS  = -Wl,--gc-sections
@@ -67,7 +71,7 @@ all: toolchain standalone
 static: static-deps
 	$(MAKE) BUILD=production STATIC=1 CURLDIR=$(STATIC_PREFIX) standalone
 
-static-deps: $(STATIC_PREFIX)/lib/libcurl.a $(STATIC_PREFIX)/lib/libmbedtls.a
+static-deps: $(STATIC_PREFIX)/lib/libcurl.a $(STATIC_PREFIX)/lib/libmbedtls.a $(STATIC_PREFIX)/lib/libnghttp2.a
 
 toolchain: $(TOOLCHAIN_STAMP)
 
@@ -81,6 +85,10 @@ $(MBEDTLS_TARBALL):
 	mkdir -p $(STATIC_DISTDIR)
 	$(FETCH) -o $(MBEDTLS_TARBALL) $(MBEDTLS_URL)
 
+$(NGHTTP2_TARBALL):
+	mkdir -p $(STATIC_DISTDIR)
+	$(FETCH) -o $(NGHTTP2_TARBALL) $(NGHTTP2_URL)
+
 $(STATIC_PREFIX)/lib/libmbedtls.a: $(MBEDTLS_TARBALL)
 	rm -rf $(MBEDTLS_SRCDIR)
 	mkdir -p $(STATIC_BUILDDIR) $(STATIC_PREFIX)
@@ -93,7 +101,27 @@ $(STATIC_PREFIX)/lib/libmbedtls.a: $(MBEDTLS_TARBALL)
 	cp $(MBEDTLS_SRCDIR)/library/libmbedx509.a $(STATIC_PREFIX)/lib/
 	cp $(MBEDTLS_SRCDIR)/library/libmbedcrypto.a $(STATIC_PREFIX)/lib/
 
-$(STATIC_PREFIX)/lib/libcurl.a: $(CURL_TARBALL) $(STATIC_PREFIX)/lib/libmbedtls.a
+$(STATIC_PREFIX)/lib/libnghttp2.a: $(NGHTTP2_TARBALL)
+	rm -rf $(NGHTTP2_SRCDIR)
+	mkdir -p $(STATIC_BUILDDIR) $(STATIC_PREFIX)
+	tar -xf $(NGHTTP2_TARBALL) -C $(STATIC_BUILDDIR)
+	cd $(NGHTTP2_SRCDIR) && env \
+		CFLAGS="$(STATIC_CFLAGS)" \
+		CXXFLAGS="$(STATIC_CFLAGS)" \
+		LDFLAGS="$(STATIC_LDFLAGS)" \
+		./configure \
+			--prefix=$(STATIC_PREFIX) \
+			--disable-shared \
+			--enable-static \
+			--enable-lib-only \
+			--disable-app \
+			--disable-examples \
+			--disable-python-bindings \
+			--disable-threads
+	$(GMAKE) -C $(NGHTTP2_SRCDIR) -j$(STATIC_JOBS)
+	$(GMAKE) -C $(NGHTTP2_SRCDIR) install
+
+$(STATIC_PREFIX)/lib/libcurl.a: $(CURL_TARBALL) $(STATIC_PREFIX)/lib/libmbedtls.a $(STATIC_PREFIX)/lib/libnghttp2.a
 	rm -rf $(CURL_SRCDIR)
 	mkdir -p $(STATIC_BUILDDIR) $(STATIC_PREFIX)
 	tar -xf $(CURL_TARBALL) -C $(STATIC_BUILDDIR)
@@ -109,14 +137,14 @@ $(STATIC_PREFIX)/lib/libcurl.a: $(CURL_TARBALL) $(STATIC_PREFIX)/lib/libmbedtls.
 			--enable-http \
 			--enable-symbol-hiding \
 			--disable-manual \
-			--disable-threaded-resolver \
+			--enable-threaded-resolver \
 			--with-ca-bundle=$(CA_BUNDLE) \
 			--without-ca-path \
 			--without-brotli \
 			--without-gssapi \
 			--without-libidn2 \
 			--without-libpsl \
-			--without-nghttp2 \
+			--with-nghttp2=$(STATIC_PREFIX) \
 			--without-nghttp3 \
 			--without-ngtcp2 \
 			--without-openssl \
