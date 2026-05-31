@@ -60,3 +60,8 @@ builds:
       branch: v0.4.0
       commit: 50b7235fd91abfec98cf5155a997a0e47ee343af
       version: 0.4.0
+    https://github.com/0x1eef/mruby-minitest.git:
+      url: https://github.com/0x1eef/mruby-minitest.git
+      branch: main
+      commit: 9e3ccebc994c689e8aba6d24f8fb2be3c3f135a5
+      version: 0.1.0

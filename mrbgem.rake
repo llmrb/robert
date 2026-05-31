@@ -21,4 +21,8 @@ MRuby::Gem::Specification.new("robert") do |spec|
     File.expand_path("build/mrblib/**/*.rb", __dir__)
   ].sort.uniq
   spec.rbfiles = [*before, *(spec.rbfiles - before)]
+
+  if ENV["BUILD"] == "test"
+    spec.add_dependency "mruby-minitest", github: "0x1eef/mruby-minitest", branch: "main"
+  end
 end

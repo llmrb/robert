@@ -15,6 +15,7 @@ BUILD_NAME    = robert
 BUILD_DIR     = $(MRUBY_DIR)/build/$(BUILD_NAME)
 BUILD ?= test
 RUBY_GEM_FILES != find mrblib -type f 2>/dev/null | sort
+SPEC_FILES != find spec -type f -name '*_spec.rb' 2>/dev/null | sort
 
 PREFIX      ?= /usr/local
 MANPREFIX   ?= $(PREFIX)/man
@@ -64,7 +65,7 @@ MRBC_FLAGS =
 POST_BUILD = true
 .endif
 
-.PHONY: all toolchain standalone static static-deps static-clean clean distclean install
+.PHONY: all toolchain standalone static static-deps static-clean test clean distclean install
 
 all: toolchain standalone
 
@@ -76,6 +77,11 @@ static-deps: $(STATIC_PREFIX)/lib/libcurl.a $(STATIC_PREFIX)/lib/libmbedtls.a $(
 toolchain: $(TOOLCHAIN_STAMP)
 
 standalone: $(STANDALONE_BIN)
+
+test: toolchain
+.for spec in $(SPEC_FILES)
+	bin/mruby $(spec)
+.endfor
 
 $(CURL_TARBALL):
 	mkdir -p $(STATIC_DISTDIR)

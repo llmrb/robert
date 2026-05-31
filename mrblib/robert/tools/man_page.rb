@@ -12,10 +12,33 @@ module Robert::Tools
     required %i[name]
 
     def call(name:, section: nil)
-      {contents: spawn(name:, section:).stdout}
+      {contents: clean(spawn(name:, section:).stdout)}
     end
 
     private
+
+    ##
+    # Remove old roff/manpage overstrike formatting.
+    #
+    # Man output can encode underlined text as "_\bX" and bold text as
+    # "X\bX". If those sequences reach the model, paths like "/bin/" may be
+    # quoted back as "_/_b_bin_/". This keeps tool output plain before it is
+    # added to the conversation.
+    #
+    # @param [String] output
+    # @return [String]
+    def clean(output)
+      backspace = "\b"
+      text = output.to_s
+      loop do
+        before = text
+        text = text.gsub(Regexp.new("_#{backspace}(.)"), "\\1")
+        text = text.gsub(Regexp.new("(.)#{backspace}\\1"), "\\1")
+        text = text.gsub(Regexp.new(".#{backspace}"), "")
+        break if text == before
+      end
+      text
+    end
 
     def spawn(name:, section:)
       Command
