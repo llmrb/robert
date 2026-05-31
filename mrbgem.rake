@@ -8,6 +8,7 @@ MRuby::Gem::Specification.new("robert") do |spec|
   spec.description = "Robert is designed to help you learn about FreeBSD"
   before = %w[
     mrblib/robert/version.rb
+    mrblib/robert/debug.rb
     mrblib/robert.rb
     mrblib/robert/theme.rb
     mrblib/robert/widgets/pane.rb

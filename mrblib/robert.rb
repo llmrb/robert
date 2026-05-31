@@ -1,4 +1,6 @@
 module Robert
+  extend Debug
+
   module Tools
   end
 

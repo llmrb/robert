@@ -18,8 +18,10 @@ class Robert::Dispatch
     # @param [Integer] delta
     # @return [void]
     def scroll_later(delta)
+      before = @scroll_delta
       @scroll_delta += delta
       @scroll_delta = [[@scroll_delta, -1].max, 1].min
+      debug_scroll("Queued scroll movement #{delta}. Pending scroll changed from #{before} to #{@scroll_delta}.")
     end
 
     ##
@@ -27,8 +29,10 @@ class Robert::Dispatch
     # @return [Boolean] true when a scroll movement was applied
     def apply_scroll
       delta = @scroll_delta
+      debug_scroll("Applying pending scroll movement #{delta}.")
       @scroll_delta = 0
       scroll_by(delta)
+      debug_scroll("Finished applying scroll movement #{delta}. Pending scroll is now #{@scroll_delta}.")
       true
     end
 
@@ -37,6 +41,7 @@ class Robert::Dispatch
     # @param [Integer] delta
     # @return [void]
     def scroll_now(delta)
+      debug_scroll("Applying immediate scroll movement #{delta}.")
       @scroll_delta = 0
       scroll_by(delta)
       redraw!
@@ -46,8 +51,10 @@ class Robert::Dispatch
     # Return chat scrolling to follow mode after a new message is submitted.
     # @return [void]
     def follow!
+      debug_scroll("Returning chat viewport to follow mode.")
       @scroll_delta = 0
       ui.chat.follow!
+      debug_scroll("Chat viewport is now following the newest message.")
     end
 
     private

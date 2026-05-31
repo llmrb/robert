@@ -2,6 +2,7 @@
 
 module Robert
   class Dispatch
+    include Debug
     include Scroll
 
     ##
@@ -71,9 +72,12 @@ module Robert
     def tick(ui)
       requires_redraw = false
       requires_redraw = apply_scroll if @scroll_delta != 0
+      events = 0
       while event = pop
+        events += 1
         requires_redraw = true
         kind, data = event
+        Robert.debug "Assistant stream produced a #{kind.inspect} event with #{debug_event_size(data)} bytes/items."
         case kind
         when "content"
           @buffer << data
@@ -107,9 +111,13 @@ module Robert
         end
       end
       if task&.status == :DORMANT
+        Robert.debug "Assistant task is dormant; clearing the active task reference."
         @task = nil
       end
-      TUI.draw(ui.root) if requires_redraw
+      if requires_redraw
+        Robert.debug "Redrawing UI after processing #{events} assistant stream events."
+        TUI.draw(ui.root)
+      end
     end
 
     private
@@ -154,6 +162,7 @@ module Robert
       return if ui.input.empty? || ui.busy
       @buffer, @labels = +"", []
       talk, msg, _agent, _ui = method(:talk), ui.input.value, agent, ui
+      Robert.debug "Submitting user message with #{msg.length} characters."
       ui.busy = true
       ui.center.show(ui.chat) unless showing_chat?
       ui.input.clear
