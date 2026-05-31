@@ -24,7 +24,6 @@ def main(argv)
 
   Task.new(name: "event-loop") do
     TUI.run(ui.root) do
-      Termbox2.set_input_mode(Termbox2::INPUT_ALT)
       TUI.draw(ui.root)
       catch(:breakout) do
         loop { tick(dispatch, ui) }
@@ -39,11 +38,10 @@ def main(argv)
 end
 
 def tick(dispatch, ui)
-  event = TUI.peek_event(0)
+  event = TUI.peek_event(5)
   dispatch.on_event(event) if event
   dispatch.tick(ui)
   Task.pass
-  sleep_ms(12)
 end
 
 def crash(err)
