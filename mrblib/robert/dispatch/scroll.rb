@@ -7,8 +7,9 @@ class Robert::Dispatch
   # Terminals can queue many up/down key-repeat events while a key is held.
   # If Robert redraws for every queued repeat, scrolling can continue after
   # the key has been released. This module coalesces arrow-key scrolls into a
-  # single pending row movement per event-loop tick. Page up/down still scroll
-  # immediately because they are explicit larger jumps.
+  # single pending row movement per event-loop tick. Page up/down queue their
+  # full jump size, so they share the deferred redraw path without being
+  # reduced to one row.
   #
   # Submitting a message returns the chat to follow mode by clearing pending
   # scroll movement before the next response starts streaming.
@@ -22,6 +23,16 @@ class Robert::Dispatch
       @scroll_delta += delta
       @scroll_delta = [[@scroll_delta, -1].max, 1].min
       debug_scroll("Queued scroll movement #{delta}. Pending scroll changed from #{before} to #{@scroll_delta}.")
+    end
+
+    ##
+    # Queue a page-sized scroll movement without arrow-key coalescing.
+    # @param [Integer] delta
+    # @return [void]
+    def scroll_page_later(delta)
+      before = @scroll_delta
+      @scroll_delta += delta
+      debug_scroll("Queued page scroll movement #{delta}. Pending scroll changed from #{before} to #{@scroll_delta}.")
     end
 
     ##

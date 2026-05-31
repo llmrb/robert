@@ -52,9 +52,9 @@ module Robert
       elsif event.key?(:DOWN)
         scroll_later(-1)
       elsif event.key?(:PGUP)
-        scroll_now(ui.chat.rh / 2)
+        scroll_page_later(ui.chat.rh / 2)
       elsif event.key?(:PGDN)
-        scroll_now(-(ui.chat.rh / 2))
+        scroll_page_later(-(ui.chat.rh / 2))
       elsif event.ch == 0x15
         ui.input.clear
         redraw!
