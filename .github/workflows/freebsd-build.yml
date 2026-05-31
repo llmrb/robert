@@ -31,6 +31,7 @@ jobs:
             fi
             ruby --version
             freebsd-version
+            make test
             make static
             file bin/robert
 
