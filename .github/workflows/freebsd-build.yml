@@ -24,7 +24,7 @@ jobs:
         with:
           usesh: true
           prepare: |
-            pkg install -y ca_root_nss curl git gmake rubygem-rake
+            pkg install -y ca_root_nss curl git gmake rubygem-rake mbedtls3
           run: |
             if [ ! -d ../mruby ]; then
               git clone --depth 1 https://github.com/mruby/mruby ../mruby
