@@ -11,6 +11,7 @@ module Robert
     def debug(message)
       return unless $DEBUG
       debug_file.write debug_timestamp, "\t", message, "\n"
+      debug_file.flush
     end
 
     ##
