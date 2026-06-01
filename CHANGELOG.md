@@ -4,14 +4,20 @@
 
 ### Add
 
-* **Add terminal theme application on startup** <br>
-  Add `Robert.set_theme` so Robert applies its terminal clear
-  attributes when the TUI starts. This keeps the app background aligned
-  with Robert's theme instead of falling back to the terminal default.
+* **Add terminal theme hooks** <br>
+  Add `Robert.set_theme` and `Robert.unset_theme` so Robert applies its
+  terminal clear attributes when the TUI starts, and resets them back to
+  the terminal defaults when the UI exits or crashes.
 
 * **Document debug and help flags** <br>
   Update the manual page to document `-d` for debug logging and `-h`
-  for usage output.
+  for usage output, and use the `.Fx` macro for FreeBSD references.
+
+### Changed
+
+* **Use a stronger terminal theme** <br>
+  Change Robert's secondary foreground color to bright white for higher
+  contrast against the black terminal background.
 
 ### Fix
 
