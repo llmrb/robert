@@ -39,9 +39,11 @@ def main(argv)
       catch(:breakout) do
         loop { tick(dispatch, ui) }
       end
+      Robert.unset_theme
       Robert.debug "Robert has exited"
     end
   rescue => err
+    Robert.unset_theme
     Robert.debug "Robert has crashed"
     crash(err)
   end

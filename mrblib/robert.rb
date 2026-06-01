@@ -27,12 +27,21 @@ module Robert
   end
 
   ##
-  # Apply Robert's terminal theme to termbox clear operations.
+  # Apply Robert's terminal theme
   # @return [void]
   def self.set_theme
     Termbox2.set_clear_attrs(
       TUI.color(Theme::FG_MUTED),
       TUI.color(Theme::BG_DEFAULT)
+    )
+  end
+
+  ##
+  # Unapply Robert's terminal theme
+  def self.unset_theme
+    Termbox2.set_clear_attrs(
+      TUI.color(:default),
+      TUI.color(:default)
     )
   end
 end
