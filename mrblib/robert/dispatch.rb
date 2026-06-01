@@ -106,6 +106,7 @@ module Robert
           ui.status.left = "Cancelled"
         when "error"
           err = data
+          ui.status.left = "Error"
           ui.chat.replace_last(:assistant, "#{err.class}: #{err.message}")
           follow!
         end
