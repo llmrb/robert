@@ -104,6 +104,7 @@ module Robert
           ui.status.right = Tree::HINTS
         when "cancel"
           ui.status.left = "Cancelled"
+          ui.status.right = Tree::HINTS
         when "error"
           err = data
           ui.status.left = "Error"
