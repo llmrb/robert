@@ -7,7 +7,7 @@ module Robert
   module Theme
     # Foreground colors
     FG_PRIMARY = :green
-    FG_SECONDARY = :white
+    FG_SECONDARY = TUI::Color::WHITE | TUI::Attr::BRIGHT
     FG_MUTED = :default
     FG_ERROR = :red
 
