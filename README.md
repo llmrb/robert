@@ -24,7 +24,7 @@ screencast and more screenshots.
 **1. Download the latest release**
 
 ```sh
-fetch https://github.com/llmrb/robert/releases/download/v0.8.0/robert
+fetch https://github.com/llmrb/robert/releases/download/v0.8.1/robert
 chmod +x robert
 ```
 
@@ -107,7 +107,7 @@ statically. The result is a self-contained 3MB binary.
 Pre-built static binaries for FreeBSD 15-STABLE and 16-CURRENT can
 be [downloaded from GitHub Releases](https://github.com/llmrb/robert/releases).
 Each tagged release publishes a `robert` binary; the latest stable
-release is [v0.8.0](https://github.com/llmrb/robert/releases/tag/v0.8.0).
+release is [v0.8.1](https://github.com/llmrb/robert/releases/tag/v0.8.1).
 
 ## Build from source
 
