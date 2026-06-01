@@ -12,7 +12,7 @@ module Robert
     FG_ERROR = :red
 
     # Background colors
-    BG_DEFAULT = :default
-    BG_ACTIVE = :default
+    BG_DEFAULT = :black
+    BG_ACTIVE = :black
   end
 end

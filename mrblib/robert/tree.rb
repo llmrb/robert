@@ -54,6 +54,8 @@ module Robert
       TUI::Chat.new(
         roles: true,
         assistant_fg: Theme::FG_PRIMARY,
+        text_fg: Theme::FG_SECONDARY,
+        bg: Theme::BG_DEFAULT,
         labels: {user: "You", assistant: "Robert"}
       )
     end

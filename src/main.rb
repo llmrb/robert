@@ -34,6 +34,7 @@ def main(argv)
 
   Task.new(name: "event-loop") do
     TUI.run(ui.root) do
+      Robert.set_theme
       TUI.draw(ui.root)
       catch(:breakout) do
         loop { tick(dispatch, ui) }
