@@ -28,43 +28,72 @@ class ReplaceInFile < LLM::Tool
 
   def call(path:, str1:, str2:)
     contents = File.read(path)
-    File.open(path, "w+") { |f| f.write contents.gsub!(str1, str2) }
+    File.open(path, "w+") { |f| contents.gsub!(str1, str2) ? f.write(contents) : nil }
     {contents:}
   end
 end
 
-class Git < LLM::Tool
-  name "git"
-  description "Provides an interface to the git command"
-  parameter :argv, Array[String], "The argument given to 'git'"
-  required %i[argv]
+class GitLog < LLM::Tool
+  name "git-log"
+  description "Provides access to the repository's recent commit history"
 
-  def call(argv:)
-    {stdout: spawn(argv).stdout}
+  def call
+    {stdout: command.stdout}
   end
 
   private
 
-  def spawn(argv)
-    Command.new("git")
-      .argv(*argv)
-      .stdout
+  def command
+    Command.new("git", "log", "-n", "30")
+  end
+end
+
+class GitTag < LLM::Tool
+  name "git-tag"
+  description "Provides access to the repository's git tags"
+
+  def call
+    {stdout: command.stdout}
+  end
+
+  private
+
+  def command
+    Command.new("git", "tag")
+  end
+end
+
+class GitShow < LLM::Tool
+  name "git-show"
+  description "Provides the contents of a commit"
+  parameter :ref, String, "The git ref"
+  required %i[ref]
+
+  def call(ref:)
+    {stdout: command(ref:).stdout}
+  end
+
+  private
+
+  def command(ref:)
+    Command.new("git", "show", ref)
   end
 end
 
 ##
 # stream
+
 class Stream < LLM::Stream
   def on_content(content)
     $stdout << content
   end
 
   def on_tool_call(tool, error)
-    $stdout << ["[tool call]", tool.name, "\n"].join(" ")
+    $stdout << ["tool call", tool.name, "\n"].join(" ")
   end
 
   def on_tool_return(tool, result)
-    $stdout << ["[tool return]", tool.name, "\n"].join(" ")
+    $stdout << ["tool return:", tool.name, "\n"].join(" ")
   end
 end
 
@@ -76,6 +105,22 @@ agent = LLM::Agent.new(
   llm,
   stream: Stream.new,
   skills: [File.join(Dir.pwd, "skills", "release-agent")],
-  tools: [ReadFile, ReplaceInFile, Git]
+  #tracer: LLM::Tracer::Logger.new(io: $stdout)
 )
-agent.talk("Release v0.8.0!")
+
+print "Enter version: "
+ver = $stdin.gets.chomp
+puts "Does #{ver} look right to you?"
+print "answer (yes/no): "
+loop do
+  reply = $stdin.gets.chomp
+  if reply.to_s.downcase[0] == 'y'
+    agent.talk("Release #{ver}!")
+    break
+  elsif reply.to_s.downcase[0] == 'n'
+    puts "Release aborted"
+    break
+  else
+    print "answer (yes/no): "
+  end
+end
