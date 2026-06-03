@@ -26,7 +26,6 @@ module Robert::Widgets
       result = @queue.pop == :allow ?
         tool.spawn(strategy).wait :
         tool.cancel(reason: "user denied tool execution")
-      ui.stream.on_tool_return(tool, result)
       result
     ensure
       ui.stream.task_queue.push ["confirmation_done", nil]
