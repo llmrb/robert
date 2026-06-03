@@ -23,7 +23,7 @@ MRuby::Build.new("robert") do |conf|
   conf.gembox "default"
   conf.gem core: "mruby-task"
   conf.gem git: "https://github.com/mrbgemz/mruby-tui"      , branch: "v0.4.0"
-  conf.gem git: "https://github.com/mrbgemz/mruby-tui-chat" , branch: "v0.1.0"
+  conf.gem git: "https://github.com/mrbgemz/mruby-tui-chat" , branch: "v0.2.0"
   conf.gem git: "https://github.com/mrbgemz/mruby-markdown" , branch: "main"
   conf.gem git: "https://github.com/llmrb/mruby-llm"        , branch: "v0.1.0.beta.7"
   conf.gem git: "https://github.com/0x1eef/mruby-command"   , branch: "main"
