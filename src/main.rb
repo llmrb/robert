@@ -56,6 +56,7 @@ def tick(dispatch, ui)
   event = TUI.peek_event(5)
   dispatch.on_event(event) if event
   dispatch.tick(ui)
+  dispatch.refresh
   Task.pass
 end
 
