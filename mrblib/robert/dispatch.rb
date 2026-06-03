@@ -231,11 +231,11 @@ module Robert
     def tool_running_label(fn)
       case fn.name
       when "man-search"
-        "• Search man page database: #{fn.arguments.keywords.join(", ")}"
+        "• Searching man page database: #{fn.arguments.keywords.join(", ")}"
       when "man-page"
         page = fn.arguments.name
         page = "#{page}(#{fn.arguments.section})" if fn.arguments.section
-        "• Read man page: #{page}"
+        "• Reading man page: #{page}"
       else
         "• call: #{fn.name}"
       end
@@ -248,7 +248,7 @@ module Robert
     def tool_finished_label(fn)
       case fn.name
       when "man-search"
-        "• Searched man page database (#{fn.arguments.join(", ")})"
+        "• Search complete (#{fn.arguments.keywords.join(", ")})"
       when "man-page"
         page = fn.arguments.name
         page = "#{page}(#{fn.arguments.section})" if fn.arguments.section
