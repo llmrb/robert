@@ -12,9 +12,9 @@ builds:
       version: 0.4.0
     https://github.com/mrbgemz/mruby-tui-chat:
       url: https://github.com/mrbgemz/mruby-tui-chat
-      branch: v0.2.0
-      commit: cab110637cb233104ae4cfb3fb2ae7f8585921e7
-      version: 0.2.0
+      branch: v0.3.0
+      commit: 7c897677b3a23bfc22d42aa27bcaf52e98812209
+      version: 0.3.0
     https://github.com/mrbgemz/mruby-markdown:
       url: https://github.com/mrbgemz/mruby-markdown
       branch: main
@@ -22,9 +22,9 @@ builds:
       version: 0.1.0
     https://github.com/llmrb/mruby-llm:
       url: https://github.com/llmrb/mruby-llm
-      branch: v0.1.0.beta.7
-      commit: 4442f7285b8f5d6b031bd42d64210831dfbebcc7
-      version: 0.1.0.beta.7
+      branch: v0.1.0.beta.10
+      commit: 6e3a8b1f75303fb8c1b6bf489b38ded5922a5b0e
+      version: 0.1.0.beta.10
     https://github.com/0x1eef/mruby-command:
       url: https://github.com/0x1eef/mruby-command
       branch: main
