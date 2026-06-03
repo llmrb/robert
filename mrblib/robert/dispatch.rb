@@ -230,6 +230,8 @@ module Robert
     # @return [String]
     def tool_running_label(fn)
       case fn.name
+      when "find"
+        "• find #{fn.arguments.root} -name #{fn.arguments.name}"
       when "man-search"
         "• Searching man page database: #{fn.arguments.keywords.join(", ")}"
       when "man-page"
@@ -247,6 +249,8 @@ module Robert
     # @return [String]
     def tool_finished_label(fn)
       case fn.name
+      when "find"
+        "• find complete"
       when "man-search"
         "• Search complete (#{fn.arguments.keywords.join(", ")})"
       when "man-page"

@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+### Add
+
+* **Add file and directory search tool** <br>
+  Add a `find` tool so Robert can search for files and directories from
+  a requested root path, advertise that capability in the system prompt,
+  show find-specific status labels while the tool runs, and document it
+  on the project site.
+
 ## v0.9.0
 
 Changes since `v0.8.1`.
