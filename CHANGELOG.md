@@ -2,6 +2,43 @@
 
 ## Unreleased
 
+## v0.9.0
+
+Changes since `v0.8.1`.
+
+This release adds periodic idle refresh so terminals that lose their
+alternate-screen contents can recover without waiting for a key press,
+fixes screen flicker by not invalidating the front buffer, and tidies
+tool status labels and confirmation handling. It also bumps mruby-llm
+to v0.1.0.beta.10, mruby-command to v0.1.0, and mruby-tui-chat to
+v0.3.1.beta.1.
+
+### Add
+
+* **Periodically refresh idle UI** <br>
+  Redraw while Robert is idle so terminals that lose their alternate-screen
+  contents can repaint without waiting for the next key press.
+
+### Changed
+
+* **Update build dependencies** <br>
+  Bump mruby-llm to v0.1.0.beta.10, mruby-command to v0.1.0, and
+  mruby-tui-chat to v0.3.1.beta.1.
+
+### Fix
+
+* **Stop invalidating the front buffer during idle refresh** <br>
+  Use a lightweight redraw instead of `Termbox2.invalidate` to avoid
+  screen flicker while idle.
+
+* **Fix tool status update labels** <br>
+  Use present continuous tense for running labels and fix the keyword
+  argument reference in finished labels.
+
+* **Remove duplicate confirmation callback** <br>
+  Remove the extra `on_tool_return` call from the confirmation widget
+  so tool results are not processed twice.
+
 ## v0.8.1
 
 Changes since `v0.8.0`.
