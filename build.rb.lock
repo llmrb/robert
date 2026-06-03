@@ -27,8 +27,8 @@ builds:
       version: 0.1.0.beta.10
     https://github.com/0x1eef/mruby-command:
       url: https://github.com/0x1eef/mruby-command
-      branch: main
-      commit: d6060c09b4b29bdd98dba8806e6f472815332843
+      branch: v0.1.0
+      commit: 57ac58c24ff26fdf7b4d21a6ce5c502929ec3371
       version: 0.1.0
     https://github.com/0x1eef/mruby-termbox2.git:
       url: https://github.com/0x1eef/mruby-termbox2.git

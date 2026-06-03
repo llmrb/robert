@@ -26,7 +26,7 @@ MRuby::Build.new("robert") do |conf|
   conf.gem git: "https://github.com/mrbgemz/mruby-tui-chat" , branch: "v0.3.0"
   conf.gem git: "https://github.com/mrbgemz/mruby-markdown" , branch: "main"
   conf.gem git: "https://github.com/llmrb/mruby-llm"        , branch: "v0.1.0.beta.10"
-  conf.gem git: "https://github.com/0x1eef/mruby-command"   , branch: "main"
+  conf.gem git: "https://github.com/0x1eef/mruby-command"   , branch: "v0.1.0"
   conf.gem File.expand_path(__dir__)
 
   case profile
