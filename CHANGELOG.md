@@ -6,9 +6,9 @@
 
 * **Add file and directory search tool** <br>
   Add a `find` tool so Robert can search for files and directories from
-  a requested root path, advertise that capability in the system prompt,
-  show find-specific status labels while the tool runs, and document it
-  on the project site.
+  a requested root path, require confirmation before running it, advertise
+  that capability in the system prompt, show find-specific status labels
+  while the tool runs, and document it on the project site.
 
 * **Add text search tool** <br>
   Add a `grep` tool so Robert can search for text across files below a
