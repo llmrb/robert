@@ -59,7 +59,7 @@ module Robert
       elsif event.ch == 0x15
         ui.input.clear
         redraw!
-      elsif event.ch >= 0x20 && event.ch <= 0x7E
+      elsif input?(event)
         ui.input.put(event.ch.chr)
         redraw!
       elsif event.event?(:RESIZE)
@@ -268,6 +268,13 @@ module Robert
     # @return [Boolean]
     def showing_chat?
       ui.chat.parent == ui.center
+    end
+
+    ##
+    # Returns true when an event can be written to the input area
+    # @return [Boolean]
+    def input?(event)
+      event.ch >= 0x20 && event.ch <= 0x7E && !scroll_noise?(event)
     end
   end
 end

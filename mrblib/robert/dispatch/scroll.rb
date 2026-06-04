@@ -20,6 +20,7 @@ class Robert::Dispatch
     # @return [void]
     def scroll_later(delta)
       before = @scroll_delta
+      @last_scroll_event = Time.now.to_f
       @scroll_delta += delta
       @scroll_delta = [[@scroll_delta, -1].max, 1].min
       debug_scroll("Queued scroll movement #{delta}. Pending scroll changed from #{before} to #{@scroll_delta}.")
@@ -82,6 +83,14 @@ class Robert::Dispatch
           ui.chat.scroll_down
         end
       end
+    end
+
+    ##
+    # Returns true for printable fragments leaked by repeated scroll keys.
+    # @param [Termbox2::Event<Robert::Event>] event
+    # @return [Boolean]
+    def scroll_noise?(event)
+      event.ch == ??.ord && Time.now.to_f - (@last_scroll_event || 0.0) < 0.25
     end
   end
 end
