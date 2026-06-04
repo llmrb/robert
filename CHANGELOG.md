@@ -20,6 +20,17 @@
   Show read-file-specific status labels while Robert is reading files so
   filesystem tool activity is visible in the status bar.
 
+### Changed
+
+* **Limit filesystem search depth** <br>
+  Enforce a maximum `maxdepth` of 3 for the `find` and `grep` tools so
+  filesystem searches stay bounded.
+
+* **Update tool status labels** <br>
+  Shorten file and man-page status labels, include `find` depth in the
+  running label, and show a dedicated label when Robert checks its
+  version.
+
 ## v0.9.0
 
 Changes since `v0.8.1`.
