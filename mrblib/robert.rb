@@ -15,6 +15,7 @@ module Robert
       Tools::ManSearch,
       Tools::ReadFile,
       Tools::Find,
+      Tools::Grep,
       Tools::Version
     ]
   end

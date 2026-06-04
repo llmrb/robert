@@ -63,15 +63,17 @@ automatic. Reading files requires confirmation.
 
 ## Tools
 
-Robert chains these tools autonomously: it searches, reads, and
-synthesises answers without hand-holding. It only pauses for
-confirmation when reading files.
+Robert chains these tools autonomously: it searches man pages and the
+filesystem, reads files, and synthesises answers without hand-holding.
+It only pauses for confirmation when reading files.
 
 | Tool | Description | Confirmation |
 |------|-------------|--------------|
 | `man-page` | Returns the contents of a man page (optionally by section) | No |
 | `man-search` | Searches manual pages for keywords via `apropos` | No |
 | `read-file` | Reads a file from the filesystem | Yes |
+| `find` | Searches for files and directories from a root path | No |
+| `grep` | Searches for text across files below a root path | No |
 | `version` | Reports Robert's version number | No |
 
 ## How it works
