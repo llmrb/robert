@@ -4,11 +4,17 @@
 
 ### Add
 
-* **Add filesystem search tools** <br>
-  Add `find` and `grep` tools so Robert can search for files, directories,
-  and text below a requested root path. Both tools require confirmation,
-  use bounded output, show tool-specific status labels, and are documented
-  in the README and project site.
+* **Add file and directory search tool** <br>
+  Add a `find` tool so Robert can search for files and directories below
+  a requested root path. The tool requires confirmation, uses bounded
+  traversal, shows a tool-specific status label, and is documented in the
+  README and project site.
+
+* **Add text search tool** <br>
+  Add a `grep` tool so Robert can search for text across files below a
+  requested root path. The tool requires confirmation, uses bounded
+  traversal and output, shows a tool-specific status label, and is
+  documented in the README and project site.
 
 ### Changed
 
