@@ -90,7 +90,8 @@ class Robert::Dispatch
     # @param [Termbox2::Event<Robert::Event>] event
     # @return [Boolean]
     def scroll_noise?(event)
-      event.ch == ??.ord && Time.now.to_f - (@last_scroll_event || 0.0) < 0.25
+      return false unless @last_scroll_event
+      Time.now.to_f - @last_scroll_event < 0.12
     end
   end
 end

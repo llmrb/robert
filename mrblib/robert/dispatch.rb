@@ -60,8 +60,16 @@ module Robert
         ui.input.clear
         redraw!
       elsif input?(event)
+        before = ui.input.value.length
         ui.input.put(event.ch.chr)
+        Robert.debug "Input: accepted event type=#{event.type} " \
+                     "key=#{event.key} ch=#{event.ch} mod=#{event.mod}; " \
+                     "length #{before}->#{ui.input.value.length}."
         redraw!
+      elsif printable?(event)
+        Robert.debug "Input: ignored printable event type=#{event.type} " \
+                     "key=#{event.key} ch=#{event.ch} mod=#{event.mod}; " \
+                     "length #{ui.input.value.length}."
       elsif event.event?(:RESIZE)
         redraw!
       end
@@ -274,7 +282,14 @@ module Robert
     # Returns true when an event can be written to the input area
     # @return [Boolean]
     def input?(event)
-      event.ch >= 0x20 && event.ch <= 0x7E && !scroll_noise?(event)
+      printable?(event) && !scroll_noise?(event)
+    end
+
+    ##
+    # Returns true when an event carries a printable ASCII character.
+    # @return [Boolean]
+    def printable?(event)
+      event.ch >= 0x20 && event.ch <= 0x7E
     end
   end
 end
