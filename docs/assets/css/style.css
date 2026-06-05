@@ -306,7 +306,8 @@ section + section {
 #slide-1:checked ~ .slides .slide-1,
 #slide-2:checked ~ .slides .slide-2,
 #slide-3:checked ~ .slides .slide-3,
-#slide-4:checked ~ .slides .slide-4 {
+#slide-4:checked ~ .slides .slide-4,
+#slide-5:checked ~ .slides .slide-5 {
   display: block;
 }
 
@@ -332,7 +333,8 @@ section + section {
 #slide-1:checked ~ .nav .nav-1,
 #slide-2:checked ~ .nav .nav-2,
 #slide-3:checked ~ .nav .nav-3,
-#slide-4:checked ~ .nav .nav-4 {
+#slide-4:checked ~ .nav .nav-4,
+#slide-5:checked ~ .nav .nav-5 {
   background: var(--color-accent);
   border-color: var(--color-accent);
 }
