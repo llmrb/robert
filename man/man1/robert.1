@@ -12,27 +12,29 @@
 .\" ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 .\" OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 .\"
-.Dd May 31, 2026
+.Dd June 5, 2026
 .Dt ROBERT 1
 .Os
 .Sh NAME
 .Nm robert
-.Nd learn Fx through its official documentation and man pages
+.Nd AI assistant for FreeBSD
 .Sh SYNOPSIS
 .Nm
 .Op Fl dhv
 .Sh DESCRIPTION
 .Nm
-is designed to help you learn about
-.Fx
-through its official
-documentation and man pages.
-It is distributed as a standalone, 3MB binary.
+is an AI assistant for FreeBSD that answers questions using official
+man pages, documentation, and
+the local ports tree.
+It runs in the terminal and is distributed as a standalone, 3MB binary
+with no Node.js, Electron, or browser dependency.
 .Pp
 It uses
 .Ev DEEPSEEK_SECRET
 to authenticate with the model provider, and answers questions by
-reading man pages and searching the manual page database.
+searching man pages, the filesystem, and ports metadata.
+Answers are grounded in cited excerpts from official documentation, not
+model training data.
 .Pp
 The options are as follows:
 .Bl -tag -width indent
@@ -49,6 +51,14 @@ and exit.
 .Bl -tag -width DEEPSEEK_SECRET
 .It Ev DEEPSEEK_SECRET
 The API key used to authenticate with the model provider.
+.It Ev PORTSDIR
+The local ports tree used by the
+.Ic find-port
+and
+.Ic read-port
+tools.
+Defaults to
+.Pa /usr/ports .
 .El
 .Sh FILES
 .Bl -tag -width /usr/share/man -compact
@@ -56,10 +66,14 @@ The API key used to authenticate with the model provider.
 The manual page database used by
 .Nm
 to search for and read man pages.
+.It Pa /usr/ports
+The default ports tree used by
+.Nm
+to search for and read port metadata.
 .El
 .Sh TOOLS
 The following tools are available to the assistant:
-.Bl -tag -width "man-search"
+.Bl -tag -width "find-port"
 .It Ic man-page
 Read a manual page by name and optional section.
 .It Ic man-search
@@ -68,6 +82,24 @@ Search the manual page database using
 .It Ic read-file
 Read a text file from the filesystem.
 This tool requires confirmation before execution.
+.It Ic find
+Search for files and directories from a root path.
+This tool requires confirmation before execution.
+.It Ic grep
+Search for text across files below a root path.
+This tool requires confirmation before execution.
+.It Ic find-port
+Search a local ports tree for a port name.
+.It Ic read-port
+Read a port's
+.Pa Makefile ,
+.Pa pkg-descr ,
+and
+.Pa distinfo .
+.It Ic version
+Report the
+.Nm
+version number.
 .El
 .Sh EXIT STATUS
 .Ex -std
