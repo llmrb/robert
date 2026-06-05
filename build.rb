@@ -32,8 +32,8 @@ MRuby::Build.new("robert") do |conf|
   #conf.gem File.realpath File.join(__dir__, "..", "..", "mrbgemz", "mruby-markdown")
   conf.gem git: "https://github.com/mrbgemz/mruby-markdown" , branch: "main"
 
-  #conf.gem File.realpath File.join(__dir__, "..", "..", "llmrb", "mruby-llm")
-  conf.gem git: "https://github.com/llmrb/mruby-llm"        , branch: "v0.1.0.beta.12"
+  #conf.gem File.realpath File.join(__dir__, "..", "mruby-llm")
+  conf.gem git: "https://github.com/llmrb/mruby-llm"        , branch: "v0.1.0.beta.13"
 
   #conf.gem File.realpath File.join(__dir__, "..", "..", "0x1eef", "mruby-process")
   conf.gem github: "0x1eef/mruby-process", branch: "v0.2.0"
