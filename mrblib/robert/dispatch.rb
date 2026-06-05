@@ -238,6 +238,10 @@ module Robert
       case fn.name
       when "version"
         "• Discovering Robert's version"
+      when "find-port"
+        "• Search ports tree: #{fn.arguments.name}"
+      when "read-port"
+        "• Read port metadata: #{fn.arguments.category}/#{fn.arguments.name}"
       when "read-file"
         "• Read: #{fn.arguments.path}"
       when "find"
