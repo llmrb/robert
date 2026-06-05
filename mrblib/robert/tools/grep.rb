@@ -4,7 +4,7 @@ module Robert::Tools
     description "Grep for a string across directories and files"
     parameter :root, String, "The root directory from where to perform the search"
     parameter :string, String, "The needle in the haystack"
-    parameter :maxdepth, Integer, "The maximum depth for directory recursion", default: 1
+    parameter :maxdepth, Integer, "The maximum depth for directory recursion (must be <= 2)", default: 1
     required %i[root string]
 
     def call(root:, string:, maxdepth: 1)

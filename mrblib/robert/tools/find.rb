@@ -5,7 +5,7 @@ module Robert::Tools
     parameter :name, String, "The file or directory name to search for"
     parameter :root, String, "The root directory from where to perform the search"
     parameter :kind, Enum["file", "directory"], "The kind of object to search for"
-    parameter :maxdepth, Integer, "The maximum directory depth to traverse", default: 1
+    parameter :maxdepth, Integer, "The maximum directory depth to traverse (must be <= 2)", default: 1
     required %i[name root kind]
 
     def call(name:, root:, kind:, maxdepth: 1)
