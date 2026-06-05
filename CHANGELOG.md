@@ -2,6 +2,50 @@
 
 ## Unreleased
 
+## v0.11.0.beta.1
+
+Changes since `v0.10.0`.
+
+This release adds `find-port` and `read-port` tools for searching a
+local ports tree and reading port metadata, fixes scroll noise that
+could leak `?` into the input area, improves man page cleaning to
+remove underscore-wrapped paths, adds debug logging for input
+handling, and updates tool parameter descriptions to advise the model
+that `maxdepth` must be `<= 2`.
+
+### Add
+
+* **Add port search and read tools** <br>
+  Add `find-port` and `read-port` tools so Robert can search a local
+  copy of the ports tree and read port metadata from it. Both tools
+  are registered in the dispatch and have their own status labels.
+
+* **Add input debug logging** <br>
+  Add debug log statements for printable character input to help
+  diagnose missing character issues in the input area.
+
+### Changed
+
+* **Improve man page path cleaning** <br>
+  Strip underscore wrappers from already-cleaned paths (e.g.
+  `_/dev_` → `/dev`) so the model receives cleaner text.
+
+* **Update find/grep parameter descriptions** <br>
+  Advise the model that `maxdepth` must be `<= 2` in the `find` and
+  `grep` tool parameter descriptions.
+
+* **Update system prompt** <br>
+  Reorganise the system prompt to describe each capability separately,
+  including the new port tools.
+
+### Fix
+
+* **Fix `?` appearing in input area during scroll** <br>
+  Add a `scroll_noise?` guard so printable fragments leaked by
+  repeated scroll keys are not written to the input area. Track the
+  last scroll event time and filter characters that arrive within the
+  noise window.
+
 ## v0.10.0
 
 Changes since `v0.9.0`.
