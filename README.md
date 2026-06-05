@@ -11,7 +11,7 @@
 Robert is an AI assistant for FreeBSD. It answers questions using
 official man pages, documentation, and the local ports tree. It runs
 entirely in your terminal and ships as a **statically linked, ~3MB
-binary** - no dependencies, no Electron, no browser needed.
+binary** - no dependencies, no Node.js, no Electron, no browser needed.
 
 Ask questions about FreeBSD in plain English. Robert searches man
 pages, the filesystem, and ports metadata, then answers with **cited
