@@ -6,13 +6,13 @@ module Robert::Tools
     parameter :category, String, "The package category (eg www)"
     required %i[name category]
 
-    def call(name:)
-      Robert.spawn command(name:)
+    def call(name:, category:)
+      Robert.spawn command(name:, category:)
     end
 
     private
 
-    def command(name:)
+    def command(name:, category:)
       Command
         .new("pkg")
         .argv("search")
