@@ -56,16 +56,17 @@ export DEEPSEEK_SECRET="sk-..."
 
 ![robert3.png](robert3.png)
 
-**Tool confirmation** - reading and searching man pages is
-automatic. Reading files requires confirmation.
+**Tool confirmation** - reading and searching man pages and ports is
+automatic. Reading files and filesystem searches require confirmation.
 
 ![robert4.png](robert4.png)
 
 ## Tools
 
-Robert chains these tools autonomously: it searches man pages and the
-filesystem, reads files, and synthesises answers without hand-holding.
-It only pauses for confirmation when reading files.
+Robert chains these tools autonomously: it searches man pages, the
+filesystem, and the local ports tree; reads files and port metadata; and
+synthesises answers without hand-holding. It only pauses for confirmation
+when reading files or searching the filesystem.
 
 | Tool | Description | Confirmation |
 |------|-------------|--------------|
@@ -74,6 +75,8 @@ It only pauses for confirmation when reading files.
 | `read-file` | Reads a file from the filesystem | Yes |
 | `find` | Searches for files and directories from a root path | Yes |
 | `grep` | Searches for text across files below a root path | Yes |
+| `find-port` | Searches a local ports tree for a port name | No |
+| `read-port` | Reads a port's `Makefile`, `pkg-descr`, and `distinfo` | No |
 | `version` | Reports Robert's version number | No |
 
 ## How it works
@@ -93,8 +96,12 @@ architecture is designed for a single-purpose terminal app:
 - **Roff sanitisation**
 
   Raw man output often includes overstrike sequences (`_\b/` for
-  underlined `/`). Those are stripped before they reach the model,
-  preventing garbled paths.
+  underlined `/`) or underscore-wrapped paths like `_/dev_`. Those are
+  stripped before they reach the model, preventing garbled paths.
+- **Ports tree lookup**
+
+  Robert can search and read a local FreeBSD ports tree. It uses
+  `${PORTSDIR}` when set, otherwise `/usr/ports`.
 - **Grounded answers**
 
   The system prompt explicitly forbids using training data. Every

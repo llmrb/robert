@@ -88,7 +88,7 @@ description: Robert is a FreeBSD AI assistant you can download as a standalone 3
       </div>
       <div class="feature">
         <h3>Tool confirmation</h3>
-        <p>Reading and searching man pages is automatic. Reading files and filesystem searches require approval.</p>
+        <p>Reading and searching man pages and ports is automatic. Reading files and filesystem searches require approval.</p>
       </div>
       <div class="feature">
         <h3>Streaming responses</h3>
@@ -137,6 +137,14 @@ description: Robert is a FreeBSD AI assistant you can download as a standalone 3
         <div class="tool-desc">Search for text across files below a root path.</div>
         <div class="tool-confirm">requires confirmation</div>
       </div>
+      <div class="tool-card">
+        <div class="tool-name">find-port</div>
+        <div class="tool-desc">Search a local ports tree for a port name.</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-name">read-port</div>
+        <div class="tool-desc">Read a port's Makefile, pkg-descr, and distinfo.</div>
+      </div>
     </div>
   </div>
 </section>
@@ -155,7 +163,11 @@ description: Robert is a FreeBSD AI assistant you can download as a standalone 3
       </div>
       <div class="feature">
         <h3>Roff sanitisation</h3>
-        <p>Raw man output is cleaned before it reaches the model, preventing garbled paths from roff overstrike formatting.</p>
+        <p>Raw man output is cleaned before it reaches the model, preventing garbled paths from roff overstrike formatting and underscore-wrapped paths.</p>
+      </div>
+      <div class="feature">
+        <h3>Ports tree lookup</h3>
+        <p>Robert can search and read a local FreeBSD ports tree, using <code>PORTSDIR</code> when set and <code>/usr/ports</code> otherwise.</p>
       </div>
     </div>
   </div>
@@ -178,7 +190,7 @@ description: Robert is a FreeBSD AI assistant you can download as a standalone 3
         <strong>Stack</strong> &mdash; mruby-llm, the mruby port of llm.rb, plus mruby-tui and mruby-markdown.
       </div>
       <div class="detail-item">
-        <strong>Version</strong> &mdash; v0.10.0.
+        <strong>Version</strong> &mdash; v0.11.0.beta.1.
       </div>
     </div>
   </div>
