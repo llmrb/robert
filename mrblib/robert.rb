@@ -18,6 +18,7 @@ module Robert
       Tools::Find,
       Tools::FindPort,
       Tools::ReadPort,
+      TOols::PackageSearch,
       Tools::Grep,
       Tools::Version
     ]
