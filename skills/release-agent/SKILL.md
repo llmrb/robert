@@ -22,11 +22,15 @@ Your task is to prepare a new release by updating `version.rb`,
  Robert is reflected throughout the project, and the `CHANGELOG.md`
  includes a summary of the release.
 
+ You must also read the git history, analyze the changes, and make
+ sure the `CHANGELOG.md` includes all changes.
+
 ### Steps
 
 When preparing a release:
   - update `mrblib/robert/version.rb`
   - update the version badge in `README.md`
+  - verify `CHANGELOG.md` has no missing entries, and update it.
   - turn the `Unreleased` changelog notes into a short release summary that matches the style of recent entries
   - bump the changelog heading from `Unreleased` to the new version and add the correct `Changes since ...` line
   - add a fresh `## Unreleased` section back at the top of `CHANGELOG.md`, before the new versioned entry

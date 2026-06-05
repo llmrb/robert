@@ -2,11 +2,26 @@
 
 ## Unreleased
 
+## v0.11.0.beta.2
+
+Changes since `v0.11.0.beta.1`.
+
+This release adds `find-package` and `read-package` tools for searching
+the local `pkg(8)` database and reading package metadata, adds runtime
+interrupt support so long-running commands can be cancelled with Ctrl+C,
+fixes the confirmation widget done signal, and bumps mruby-llm to
+v0.1.0.beta.11, mruby-process to v0.2.0, mruby-command to
+v0.2.0.beta.2, and adds mruby-chan v0.3.0.
+
 ### Add
 
 * **Add package database tools** <br>
   Add `find-package` and `read-package` tools so Robert can search the
   local `pkg(8)` database and read exact package metadata from it.
+
+* **Add runtime interrupt support** <br>
+  Interrupt long-running commands with Ctrl+C, introduce task and fork
+  concurrency methods, and show full backtraces in error messages.
 
 ### Changed
 
@@ -16,13 +31,19 @@
   ports tree, and package metadata.
 
 * **Update build dependencies** <br>
-  Bump mruby-tui to v0.4.1.
+  Bump mruby-tui to v0.4.1, mruby-llm to v0.1.0.beta.11,
+  mruby-process to v0.2.0, mruby-command to v0.2.0.beta.2, and add
+  mruby-chan v0.3.0.
 
 ### Fix
 
 * **Improve port and package lookup** <br>
   Optimise `find-port`, avoid parent directory matches, and make
   `read-package` require an exact package origin match.
+
+* **Fix confirmation widget done signal** <br>
+  Ensure `confirmation_done` is always pushed to the task queue,
+  whether the user allows or denies the tool.
 
 * **Add sanitizer regression coverage** <br>
   Add tests for `Robert.sanitize` so unsafe control bytes stay out of
