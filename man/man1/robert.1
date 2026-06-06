@@ -17,19 +17,18 @@
 .Os
 .Sh NAME
 .Nm robert
-.Nd AI assistant for FreeBSD
+.Nd FreeBSD teacher for the terminal
 .Sh SYNOPSIS
 .Nm
 .Op Fl dhv
 .Sh DESCRIPTION
 .Nm
-is an AI assistant for FreeBSD that answers questions using official
-man pages, documentation, and
-the local ports tree.
-It runs in the terminal and is distributed as a standalone, 3MB binary
+is designed to teach you about FreeBSD by answering
+questions from official manual pages and documentation.
+He runs in the terminal and is distributed as a standalone, 3MB binary
 with no Node.js, Electron, or browser dependency.
 .Pp
-It uses
+Robert uses
 .Ev DEEPSEEK_SECRET
 to authenticate with the model provider, and answers questions by
 searching man pages, the filesystem, and ports metadata.

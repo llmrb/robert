@@ -8,16 +8,15 @@
 
 ## About
 
-Robert is an AI assistant for FreeBSD. It answers questions using
-official man pages, documentation, the local ports tree, and package
-metadata. It runs entirely in your terminal and ships as a **statically
-linked, ~3MB binary** - no dependencies, no Node.js, no Electron, no
-browser needed.
+Robert is designed to teach you about FreeBSD by answering questions
+from official manual pages and documentation. He runs entirely in your
+terminal and ships as a **statically linked, ~3MB binary** - no
+dependencies, no Node.js, no Electron, no browser needed.
 
 Ask questions about FreeBSD in plain English. Robert searches man
-pages, the filesystem, ports, and packages, then answers with **cited
-excerpts** from official docs - not its training data. It runs on
-DeepSeek and costs pennies to use.
+pages, documentation, the filesystem, ports, and packages, then answers
+with **cited excerpts** from official docs. He runs on DeepSeek and
+costs pennies to use.
 
 [The website](https://llmrb.github.io/robert) has a full
 screencast and more screenshots.
