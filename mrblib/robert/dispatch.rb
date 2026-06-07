@@ -236,6 +236,8 @@ module Robert
     # @return [String]
     def tool_running_label(fn)
       case fn.name
+      when "search-handbook"
+        "• Search FreeBSD's handbook: #{fn.arguments.keyword}"
       when "version"
         "• Discovering Robert's version"
       when "read-package"
