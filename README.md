@@ -9,14 +9,14 @@
 ## About
 
 Robert is designed to teach you about FreeBSD by answering questions
-from official manual pages and documentation. He runs entirely in your
-terminal and ships as a **statically linked, ~3MB binary** - no
-dependencies, no Node.js, no Electron, no browser needed.
+from official manual pages and the FreeBSD Handbook. He runs entirely
+in your terminal and ships as a **statically linked, ~3MB binary** -
+no dependencies, no Node.js, no Electron, no browser needed.
 
 Ask questions about FreeBSD in plain English. Robert searches man
-pages, documentation, the filesystem, ports, and packages, then answers
-with **cited excerpts** from official docs. He runs on DeepSeek and
-costs pennies to use.
+pages, the Handbook with full-text search, the filesystem, ports, and
+packages, then answers with **cited excerpts** from official docs. He
+runs on DeepSeek and costs pennies to use.
 
 [The website](https://llmrb.github.io/robert) has a full
 screencast and more screenshots.
@@ -56,27 +56,29 @@ export DEEPSEEK_SECRET="sk-..."
 
 ![robert2.png](robert2.png)
 
-**Second turn** - question answered from the FreeBSD man pages.
+**Second turn** - question answered from official FreeBSD docs.
 
 ![robert3.png](robert3.png)
 
-**Tool confirmation** - reading and searching man pages and ports is
-automatic. Reading files and filesystem searches require confirmation.
+**Tool confirmation** - reading and searching man pages, the Handbook,
+and ports is automatic. Reading files and filesystem searches require
+confirmation.
 
 ![robert4.png](robert5.png)
 
 ## Tools
 
 Robert chains these tools autonomously: it searches man pages, the
-filesystem, the local ports tree, and the package database; reads files,
-port metadata, and package metadata; and synthesises answers without
-hand-holding. It only pauses for confirmation when reading files or
-searching the filesystem.
+FreeBSD Handbook, the filesystem, the local ports tree, and the package
+database; reads files, port metadata, and package metadata; and
+synthesises answers without hand-holding. It only pauses for
+confirmation when reading files or searching the filesystem.
 
 | Tool | Description | Confirmation |
 |------|-------------|--------------|
 | `man-page` | Returns the contents of a man page (optionally by section) | No |
 | `man-search` | Searches manual pages for keywords via `apropos` | No |
+| `search-handbook` | Searches the FreeBSD Handbook with full-text search | No |
 | `read-file` | Reads a file from the filesystem | Yes |
 | `find` | Searches for files and directories from a root path | Yes |
 | `grep` | Searches for text across files below a root path | Yes |
@@ -108,6 +110,11 @@ architecture is designed for a single-purpose terminal app:
   underlined `/`) or underscore-wrapped paths like `_/dev_`. Those are
   stripped before they reach the model, preventing garbled paths.
 
+- **Handbook search**
+
+  Robert can search the FreeBSD Handbook with full-text search, then
+  use matching Handbook results alongside manual pages.
+
 - **Ports tree lookup**
 
   Robert can search and read a local FreeBSD ports tree. It uses
@@ -121,8 +128,8 @@ architecture is designed for a single-purpose terminal app:
 - **Grounded answers**
 
   The system prompt explicitly forbids using training data. Every
-  claim must cite a man page via blockquote. Off-topic questions
-  are gently redirected.
+  claim must cite official FreeBSD documentation via blockquote.
+  Off-topic questions are gently redirected.
 
 The binary is a single C file (`main.c`) that bootstraps an mruby
 VM and loads the compiled irep. The Ruby application code, TUI

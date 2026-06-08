@@ -1,5 +1,5 @@
 title: "Robert: a long time FreeBSD user"
-description: Robert teaches FreeBSD from official manual pages and documentation as a standalone 3MB binary, built on llm.rb.
+description: Robert teaches FreeBSD from official manual pages and the FreeBSD Handbook as a standalone 3MB binary, built on llm.rb.
 url: "https://llmrb.github.io"
 baseurl: "/robert"
 markdown: kramdown

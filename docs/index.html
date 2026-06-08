@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Robert
-description: Robert teaches FreeBSD from official manual pages and documentation as a standalone 3MB binary, built on llm.rb.
+description: Robert teaches FreeBSD from official manual pages and the FreeBSD Handbook as a standalone 3MB binary, built on llm.rb.
 ---
 
 <section class="hero">
@@ -10,14 +10,14 @@ description: Robert teaches FreeBSD from official manual pages and documentation
     <h1>Robert</h1>
     <p class="subtitle">
       Robert is designed to teach you about FreeBSD by answering questions
-      from official manual pages and documentation. He runs entirely in your
-      terminal and ships as a statically linked, ~3MB binary &mdash; no
-      dependencies, no Node.js, no Electron, no browser needed.
+      from official manual pages and the FreeBSD Handbook. He runs entirely
+      in your terminal and ships as a statically linked, ~3MB binary &mdash;
+      no dependencies, no Node.js, no Electron, no browser needed.
     </p>
     <p class="subtitle">
-      Ask questions in plain English. Robert searches man pages,
-      documentation, the filesystem, ports, and packages, then answers with
-      cited excerpts from official docs.
+      Ask questions in plain English. Robert searches man pages, the
+      Handbook with full-text search, the filesystem, ports, and packages,
+      then answers with cited excerpts from official docs.
     </p>
     <a class="install" href="https://github.com/llmrb/robert/releases/latest">
       <span>Download from GitHub Releases</span>
@@ -57,7 +57,7 @@ description: Robert teaches FreeBSD from official manual pages and documentation
           <img src="robert2.png" alt="Robert responding to a simple greeting">
         </div>
         <div class="slide slide-4">
-          <img src="robert3.png" alt="Robert answering a question using man pages">
+          <img src="robert3.png" alt="Robert answering a question using official FreeBSD docs">
         </div>
         <div class="slide slide-5">
           <img src="robert5.png" alt="Robert asking for confirmation before running a tool">
@@ -88,12 +88,12 @@ description: Robert teaches FreeBSD from official manual pages and documentation
         <p>No Ruby runtime, no gems, no dependencies. Just a native binary you download and run.</p>
       </div>
       <div class="feature">
-        <h3>Man page native</h3>
-        <p>Robert uses <code>man</code> and <code>apropos</code> directly. Answers are sourced from your system's documentation.</p>
+        <h3>FreeBSD docs native</h3>
+        <p>Robert uses <code>man</code>, <code>apropos</code>, and Handbook full-text search. Answers are sourced from official FreeBSD documentation.</p>
       </div>
       <div class="feature">
         <h3>Tool confirmation</h3>
-        <p>Reading and searching man pages and ports is automatic. Reading files and filesystem searches require approval.</p>
+        <p>Reading and searching man pages, the Handbook, and ports is automatic. Reading files and filesystem searches require approval.</p>
       </div>
       <div class="feature">
         <h3>Streaming responses</h3>
@@ -122,6 +122,10 @@ description: Robert teaches FreeBSD from official manual pages and documentation
       <div class="tool-card">
         <div class="tool-name">man-search</div>
         <div class="tool-desc">Search the man page database with apropos.</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-name">search-handbook</div>
+        <div class="tool-desc">Search the FreeBSD Handbook with full-text search.</div>
       </div>
       <div class="tool-card">
         <div class="tool-name">version</div>
@@ -168,7 +172,7 @@ description: Robert teaches FreeBSD from official manual pages and documentation
     <div class="features">
       <div class="feature">
         <h3>Grounded answers</h3>
-        <p>The system prompt forbids using training data. Every claim must cite a man page via blockquote.</p>
+        <p>The system prompt forbids using training data. Every claim must cite official FreeBSD documentation via blockquote.</p>
       </div>
       <div class="feature">
         <h3>Cooperative scheduler</h3>
@@ -177,6 +181,10 @@ description: Robert teaches FreeBSD from official manual pages and documentation
       <div class="feature">
         <h3>Roff sanitisation</h3>
         <p>Raw man output is cleaned before it reaches the model, preventing garbled paths from roff overstrike formatting and underscore-wrapped paths.</p>
+      </div>
+      <div class="feature">
+        <h3>Handbook full-text search</h3>
+        <p>Robert can search the FreeBSD Handbook and use matching results alongside manual pages.</p>
       </div>
       <div class="feature">
         <h3>Ports tree lookup</h3>
