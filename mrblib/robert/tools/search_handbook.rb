@@ -8,7 +8,7 @@ module Robert::Tools
     required %i[keyword]
 
     def call(keyword:)
-      res = Curl.get("http://localhost:9292", params: {q: keyword})
+      res = Curl.get("https://4.4bsd.dev", params: {q: keyword})
       JSON.parse(res.body)
     end
   end
