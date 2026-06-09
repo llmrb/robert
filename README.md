@@ -1,12 +1,9 @@
 <p align="center">
   <a href="http://llmrb.github.io/robert">
-    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi39c9ab6rTHulzqrvy45M_omMN8cUyRxfaAph0UhlpubhMxgnJVyOEarYGmHNZgt1uUZmO8cobmrloSiAfxUjgjNOVvRZrF9n9b5tO0S-sG7e9DHfalqyYQZm6aY1jV55IzPbGPA/s1600/freebsd_jail.png" width="200" height="200" border="0" alt="mruby-jail">
+    <img src="./robert.png" width="150" height="150" border="0" alt="mruby-jail">
   </a>
   <br>
-  <strong>Robert</strong>
 </p>
-
-## About
 
 Robert is designed to teach you about FreeBSD by answering questions
 from official manual pages and the FreeBSD Handbook. He runs entirely
