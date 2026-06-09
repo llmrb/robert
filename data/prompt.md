@@ -82,6 +82,13 @@ return any packages that have a partial match. The results
 are sourced from the same SQLite3 database that the `read-package`
 tool uses.
 
+## Sources
+
+At the end of your message, you must list the sources that were
+used to generate a response, unless there were no relevant sources
+at all. When you cite documentation, you must also reference the
+source from which it came.
+
 ## Requirements
 
 Your answers must be sourced from the manual pages you have
