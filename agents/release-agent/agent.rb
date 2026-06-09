@@ -27,9 +27,15 @@ class ReplaceInFile < LLM::Tool
   required %i[path str1 str2]
 
   def call(path:, str1:, str2:)
+    raise "search string is empty" if str1.empty?
     contents = File.read(path)
-    File.open(path, "w+") { |f| contents.gsub!(str1, str2) ? f.write(contents) : nil }
-    {contents:}
+    matches = contents.scan(str1).length
+    raise "search string not found in #{path}" if matches == 0
+    updated = contents.sub(str1, str2)
+    raise "replacement produced no change in #{path}" if updated == contents
+    raise "replacement would empty #{path}" if !contents.empty? && updated.empty?
+    File.open(path, "w") { |f| f.write(updated) }
+    {contents: updated, replacements: 1}
   end
 end
 
