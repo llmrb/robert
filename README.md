@@ -144,4 +144,5 @@ is a port of [llm.rb](https://github.com/llmrb/llm.rb) to mruby.
 
 ## License
 
-0BSD. See [LICENSE](LICENSE).
+0BSD. <br>
+See [LICENSE](LICENSE).
