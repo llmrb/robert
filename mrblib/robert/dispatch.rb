@@ -6,6 +6,12 @@ module Robert
     include Scroll
 
     ##
+    # Maximum live markdown renders per second while a response streams.
+    # Higher = smoother streaming
+    # Lower  = less CPU usage
+    FPS = 10
+
+    ##
     # @param [LLM::Object] context
     # @return [Robert::Dispatch]
     def initialize(context)
@@ -21,6 +27,8 @@ module Robert
       @last_idle_refresh = Time.now.to_f
       @defer_redraw = false
       @needs_redraw = false
+      @changed = false
+      @last_render = 0.0
     end
 
     ##
@@ -108,41 +116,51 @@ module Robert
       events = 0
       while event = pop
         events += 1
-        requires_redraw = true
         kind, data = event
         Robert.debug "Assistant stream produced a #{kind.inspect} event with #{debug_event_size(data)} bytes/items."
         case kind
         when "content"
           @buffer << data
-          ui.chat.append(:assistant, assistant_text)
-          follow!
+          @changed = true
         when "tool_call"
           @labels << tool_running_label(data)
           ui.chat.replace_last(:assistant, assistant_text)
           follow!
+          @changed = false
+          @last_render = Time.now.to_f
+          requires_redraw = true
         when "tool_return"
           follow!
         when "confirmation"
           @confirmation = data
           ui.status.left = data.prompt
           ui.status.right = data.hint
+          requires_redraw = true
         when "confirmation_done"
           @confirmation = nil
           ui.status.left = "Thinking..."
           ui.status.right = Tree::CANCEL_HINT
+          requires_redraw = true
         when "done"
+          requires_redraw = flush(ui, true) || requires_redraw
           ui.status.left = "Idle"
           ui.status.right = Tree::HINTS
+          requires_redraw = true
         when "cancel"
+          requires_redraw = flush(ui, true) || requires_redraw
           ui.status.left = "Cancelled"
           ui.status.right = Tree::HINTS
+          requires_redraw = true
         when "error"
+          @changed = false
           err = data
           ui.status.left = "Error"
           ui.chat.replace_last(:assistant, "#{err.class}: #{err.message} #{err.backtrace.join("\n")}")
           follow!
+          requires_redraw = true
         end
       end
+      requires_redraw = flush(ui) || requires_redraw
       if task&.status == :DORMANT
         Robert.debug "Assistant task is dormant; clearing the active task reference."
         @task = nil
@@ -179,6 +197,28 @@ module Robert
     # @return [TUI::Markdown::Node]
     def assistant_text
       Markdown.new([@labels.join("\n"), "\n", @buffer].join("\n")).ast
+    end
+
+    ##
+    # Render accumulated stream content at a bounded rate.
+    #
+    # Providers often deliver very small chunks. Parsing markdown, invalidating
+    # chat layout, and repainting for every chunk can saturate a CPU while the
+    # model is streaming. Keep all chunks, but update the UI at most ~10 times
+    # per second unless a state transition needs an immediate flush.
+    #
+    # @param [LLM::Object] ui
+    # @param [Boolean] force
+    # @return [Boolean]
+    def flush(ui, force = false)
+      return false unless @changed
+      now = Time.now.to_f
+      return false if !force && (now - @last_render) < (1.0 / FPS)
+      ui.chat.replace_last(:assistant, assistant_text)
+      follow!
+      @changed = false
+      @last_render = now
+      true
     end
 
     ##
