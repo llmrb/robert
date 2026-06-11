@@ -47,38 +47,31 @@ def main(argv)
   agent.ui  = ui
   dispatch  = Robert::Dispatch.new(LLM::Object.from(llm:, agent:, ui: agent.ui))
 
-  task = Task.new(name: "event-loop") do
-    TUI.run(ui.root) do
-      Robert.set_theme
-      begin
-        TUI.draw(ui.root)
-        reason = catch(:breakout) do
-          while true
-            tick(dispatch, ui)
-          end
+  TUI.run(ui.root) do
+    Robert.set_theme
+    begin
+      TUI.draw(ui.root)
+      reason = catch(:breakout) do
+        while true
+          tick(dispatch, ui)
         end
-        Robert.debug "Robert has exited: '#{reason}'"
-      ensure
-        Robert.unset_theme
       end
+      Robert.debug "Robert has exited: '#{reason}'"
+    ensure
+      Robert.unset_theme
     end
-  rescue => err
-    Robert.debug "Robert has crashed"
-    crash(err)
   end
-  result, value, status = Task.run, task.value, task.status
-  Robert.debug "Task.run returned #{result.inspect}; " \
-               "event-loop status=#{status.inspect}; " \
-               "value=#{value.class}: #{value.inspect}"
-  crash(value) if Exception === value
+rescue => err
+  Robert.debug "Robert has crashed"
+  crash(err)
 end
 
 def tick(dispatch, ui)
   event = TUI.peek_event(INPUT_POLL_MS)
   dispatch.on_peek peek_ahead(event) if event
+  Task.pass
   dispatch.tick(ui)
   dispatch.refresh
-  sleep_ms 1
 end
 
 def peek_ahead(event)
