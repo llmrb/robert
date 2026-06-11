@@ -1,5 +1,17 @@
 # frozen_string_literal: true
 
+##
+# Event loop latency/CPU balance.
+#
+# Higher = fewer wakeups and less SSH/terminal churn
+# Lower  = slightly faster reaction to input and stream updates
+INPUT_POLL_MS = 20
+
+##
+# Limit one delayed terminal burst so scroll/key-repeat input cannot monopolize
+# the loop before stream output and redraw throttles get a turn.
+MAX_PEEK_EVENTS = 64
+
 def main(argv)
   while option = argv.shift
     case option
@@ -56,7 +68,7 @@ def main(argv)
 end
 
 def tick(dispatch, ui)
-  event = TUI.peek_event(5)
+  event = TUI.peek_event(INPUT_POLL_MS)
   dispatch.on_peek peek_ahead(event) if event
   dispatch.tick(ui)
   dispatch.refresh
@@ -65,7 +77,7 @@ end
 
 def peek_ahead(event)
   events = [event]
-  while event = TUI.peek_event(0)
+  while events.length < MAX_PEEK_EVENTS and (event = TUI.peek_event(0))
     events << event
   end
   events
