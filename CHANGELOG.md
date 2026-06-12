@@ -2,6 +2,63 @@
 
 ## Unreleased
 
+## v0.12.0
+
+Changes since `v0.11.0`.
+
+This release focuses on making Robert feel stable and responsive in slow
+terminals, especially over high-latency SSH. Scrolling now uses cheaper
+terminal-native updates where possible, streaming markdown renders at a bounded
+rate, and Robert no longer pulls the viewport to the bottom while text is still
+arriving. It also pulls in the matching mruby, mruby-tui, mruby-tui-chat, and
+mruby-termbox2 updates needed for that work.
+
+### Changed
+
+* **Optimize scroll responsiveness** <br>
+  Use terminal-native scroll rendering for small row movements (`scroll_fast`),
+  rely on the chat cache and avoid full root redraws when scrolling, limit
+  arrow-key scroll to 4 rows per tick for smoother movement over high-latency
+  links, and add a dedicated `redraw_chat!` method that renders only the chat
+  viewport.
+
+* **Improve streaming render performance** <br>
+  Cap markdown rendering at 10 FPS so streaming no longer saturates a CPU core.
+  Accumulate stream content chunks and flush them at a bounded rate unless a
+  state transition needs an immediate draw.
+
+* **Improve high-latency SSH performance** <br>
+  Increase the input poll timeout to 20ms and cap the maximum peek-ahead events
+  to 64 so scroll/key-repeat input cannot monopolize the loop before stream
+  output and redraw throttles get a turn. Replace `Task.pass` with `sleep_ms 1`
+  and pass control to the next task in the busy loop.
+
+* **Disable auto-follow during text streaming** <br>
+  Auto-scroll to bottom only when the user submits a message and when tool calls
+  are streaming. During text streaming, the user controls the viewport with
+  up/down.
+
+* **Remove stale mruby workaround** <br>
+  Remove the workaround for mruby issue #6883 from `tool_running_label` now that
+  the upstream fix has been pulled.
+
+* **Update build dependencies** <br>
+  Bump mruby-tui to v0.6.0, mruby-tui-chat to v0.3.1.beta.3, mruby-termbox2 to
+  v0.5.0, and pull mruby fixes.
+
+### Fix
+
+* **Guard against scroll crash** <br>
+  Add a guard to prevent scroll crashes.
+
+* **Log crash details** <br>
+  Write the full error class, message, and backtrace to `robert.log` when Robert crashes.
+
+### Docs
+
+* **Update site redirect and cleanup** <br>
+  Redirect the project site to 4.4bsd.dev, drop the "Appearance" section, and remove unused files.
+
 ## v0.11.0
 
 Changes since `v0.11.0.beta.4`.
