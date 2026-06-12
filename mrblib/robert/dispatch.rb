@@ -68,8 +68,6 @@ module Robert
         ui.status.left = "Cancelled"
         ui.status.right = Tree::HINTS
         redraw!
-      elsif event.key?(:CTRL_D) and not exitable?
-        Robert.debug "Ignoring Ctrl+D while Robert is active or handling recent scroll input."
       elsif event.key?(:CTRL_D)
         Robert.debug "Exiting on Ctrl+D event type=#{event.type} key=#{event.key} ch=#{event.ch} mod=#{event.mod}."
         throw(:breakout, :ctrl_d)
@@ -381,13 +379,6 @@ module Robert
     # @return [Boolean]
     def showing_chat?
       ui.chat.parent == ui.center
-    end
-
-    ##
-    # Returns true when Ctrl+D should exit the application.
-    # @return [Boolean]
-    def exitable?
-      !@streaming and !task and !ui.busy and ui.input.empty? and !recent_scroll?
     end
 
     ##
