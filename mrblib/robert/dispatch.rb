@@ -114,11 +114,7 @@ module Robert
     # @return [void]
     def tick(ui)
       requires_redraw = false
-      scroll_redraw = false
-      if @scroll_delta != 0
-        apply_scroll
-        scroll_redraw = true
-      end
+      scroll_redraw = @scroll_delta != 0 ? apply_scroll : false
       events = 0
       while event = pop
         events += 1

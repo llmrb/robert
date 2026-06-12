@@ -7,14 +7,14 @@ builds:
   robert:
     https://github.com/mrbgemz/mruby-tui:
       url: https://github.com/mrbgemz/mruby-tui
-      branch: v0.5.0
-      commit: 4eca59aec6d797f3e2a58667a6a96af68e4b16ef
-      version: 0.5.0
+      branch: v0.6.0
+      commit: 0df2ac42bc6390d66a34aa5ebffe2f05b688558c
+      version: 0.6.0
     https://github.com/mrbgemz/mruby-tui-chat:
       url: https://github.com/mrbgemz/mruby-tui-chat
-      branch: v0.3.1.beta.2
-      commit: e1a91447978178b7426cd2d7b15e7a83f9d7d75e
-      version: 0.3.1.beta.2
+      branch: v0.3.1.beta.3
+      commit: df1fefd8cc050036d23b2a07ba7f5ae497b8d0e2
+      version: 0.3.1.beta.3
     https://github.com/mrbgemz/mruby-markdown:
       url: https://github.com/mrbgemz/mruby-markdown
       branch: main
@@ -37,9 +37,9 @@ builds:
       version: 0.2.0.beta.2
     https://github.com/0x1eef/mruby-termbox2.git:
       url: https://github.com/0x1eef/mruby-termbox2.git
-      branch: v0.4.0
-      commit: c893286bceaf36d8d9091d120605ee988866793a
-      version: 0.4.0
+      branch: v0.5.0
+      commit: cd424bc5b4cf362b8245fb9e43358397476b3a9d
+      version: 0.5.0
     https://github.com/mattn/mruby-http.git:
       url: https://github.com/mattn/mruby-http.git
       branch: master

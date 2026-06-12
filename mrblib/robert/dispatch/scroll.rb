@@ -54,9 +54,10 @@ class Robert::Dispatch
       delta = @scroll_delta
       debug_scroll("Applying pending scroll movement #{delta}.")
       @scroll_delta = 0
-      scroll_by(delta)
+      redraw = !scroll_fast(delta)
+      scroll_by(delta) if redraw
       debug_scroll("Finished applying scroll movement #{delta}. Pending scroll is now #{@scroll_delta}.")
-      true
+      redraw
     end
 
     ##
@@ -94,6 +95,16 @@ class Robert::Dispatch
           ui.chat.scroll_down
         end
       end
+    end
+
+    ##
+    # Use terminal-native scrolling for small row movements.
+    # @param [Integer] delta
+    # @return [Boolean] true when the chat widget rendered the scroll itself
+    def scroll_fast(delta)
+      return false unless delta.abs <= SCROLL_MAX
+      return false unless ui.chat.respond_to?(:scroll_render)
+      ui.chat.scroll_render(delta)
     end
 
     ##

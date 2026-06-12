@@ -24,11 +24,11 @@ MRuby::Build.new("robert") do |conf|
   conf.gem core: "mruby-task"
 
   #conf.gem File.realpath File.join(__dir__, "..", "mruby-termbox2")
-  #conf.gem File.realpath File.join(__dir__, "..", "..", "mrbgemz", "mruby-tui")
-  conf.gem git: "https://github.com/mrbgemz/mruby-tui"      , branch: "v0.5.0"
+  #conf.gem File.realpath File.join(__dir__, "..", "mruby-tui")
+  conf.gem git: "https://github.com/mrbgemz/mruby-tui"      , branch: "v0.6.0"
 
   #conf.gem File.realpath File.join(__dir__, "..", "mruby-tui-chat")
-  conf.gem git: "https://github.com/mrbgemz/mruby-tui-chat" , branch: "v0.3.1.beta.2"
+  conf.gem git: "https://github.com/mrbgemz/mruby-tui-chat" , branch: "v0.3.1.beta.3"
 
   #conf.gem File.realpath File.join(__dir__, "..", "..", "mrbgemz", "mruby-markdown")
   conf.gem git: "https://github.com/mrbgemz/mruby-markdown" , branch: "main"
