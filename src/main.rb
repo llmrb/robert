@@ -49,17 +49,16 @@ def main(argv)
 
   TUI.run(ui.root) do
     Robert.set_theme
-    begin
-      TUI.draw(ui.root)
-      reason = catch(:breakout) do
-        while true
-          tick(dispatch, ui)
-        end
+    TUI.draw(ui.root)
+    reason = catch(:breakout) do
+      while true
+        tick(dispatch, ui)
+        Task.pass
       end
-      Robert.debug "Robert has exited: '#{reason}'"
-    ensure
-      Robert.unset_theme
     end
+    Robert.debug "Robert has exited: '#{reason}'"
+  ensure
+    Robert.unset_theme
   end
 rescue => err
   Robert.debug [
