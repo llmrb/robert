@@ -4,6 +4,7 @@ MRuby::Build.new("robert") do |conf|
   curldir = File.expand_path(ENV["CURLDIR"] || "/usr/local")
 
   conf.toolchain
+  conf.cc.flags << "-fPIC"
   conf.cc.include_paths << File.join(curldir, "include")
   conf.linker.library_paths << File.join(curldir, "lib")
 
@@ -17,7 +18,7 @@ MRuby::Build.new("robert") do |conf|
       "-pthread"
     ].join(" ")
   else
-    conf.linker.flags << "-lcurl -lmbedtls"
+    conf.linker.flags << "-lcurl -lmbedtls -pie"
   end
 
   conf.gembox "default"
