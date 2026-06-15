@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 220" role="img" aria-labelledby="title desc">
+  <title id="title">4.4BSD BSD Software logo</title>
+  <desc id="desc">A transparent 4.4bsd.dev wordmark with a Puffy-inspired terminal mascot.</desc>
+  <defs>
+    <linearGradient id="titleGradient" x1="0" y1="42" x2="0" y2="128" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="0.45" stop-color="#e1e4e8"/>
+      <stop offset="1" stop-color="#aeb8c2"/>
+    </linearGradient>
+    <linearGradient id="subGradient" x1="0" y1="150" x2="0" y2="190" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#c7d0d9"/>
+      <stop offset="1" stop-color="#7d8792"/>
+    </linearGradient>
+    <linearGradient id="accentGradient" x1="90" y1="0" x2="470" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#30363d"/>
+      <stop offset="0.5" stop-color="#3fb950"/>
+      <stop offset="1" stop-color="#30363d"/>
+    </linearGradient>
+    <linearGradient id="puffyBody" x1="440" y1="54" x2="528" y2="142" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#5ee0d6"/>
+      <stop offset="1" stop-color="#258a94"/>
+    </linearGradient>
+    <linearGradient id="puffyFin" x1="430" y1="90" x2="548" y2="134" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#48c463"/>
+      <stop offset="1" stop-color="#2ea043"/>
+    </linearGradient>
+    <filter id="titleShadow" x="-20%" y="-40%" width="140%" height="180%">
+      <feDropShadow dx="0" dy="8" stdDeviation="7" flood-color="#000" flood-opacity="0.55"/>
+    </filter>
+    <filter id="greenGlow" x="-20%" y="-40%" width="140%" height="180%">
+      <feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#3fb950" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <g transform="translate(-15 0)">
+    <path d="M444 105c-15-15-27-19-39-19 7 17 18 27 34 32-15 5-25 15-31 30 21-1 35-10 45-27z"
+          fill="url(#puffyFin)" stroke="#05070a" stroke-width="6" stroke-linejoin="round"/>
+    <path d="M520 95c18-10 33-10 46-3-10 13-23 20-41 20 13 9 20 20 21 36-19-4-30-15-37-31z"
+          fill="url(#puffyFin)" stroke="#05070a" stroke-width="6" stroke-linejoin="round"/>
+    <circle cx="487" cy="111" r="45" fill="url(#puffyBody)" stroke="#05070a" stroke-width="7"/>
+    <circle cx="470" cy="99" r="15" fill="#f6f7f2" stroke="#05070a" stroke-width="5"/>
+    <circle cx="501" cy="99" r="15" fill="#f6f7f2" stroke="#05070a" stroke-width="5"/>
+    <circle cx="475" cy="103" r="5" fill="#0f1419"/>
+    <circle cx="496" cy="103" r="5" fill="#0f1419"/>
+    <path d="M471 129l13 10-13 10" fill="none" stroke="#f6f7f2" stroke-width="7"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M492 149h20" stroke="#3fb950" stroke-width="7" stroke-linecap="round"/>
+  </g>
+
+  <g font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" text-anchor="middle">
+    <text x="280" y="122" fill="none" stroke="#05070a" stroke-width="10" font-size="86"
+          font-weight="800" letter-spacing="-1.5" filter="url(#titleShadow)">4.4BSD</text>
+    <text x="280" y="122" fill="url(#titleGradient)" font-size="86" font-weight="800"
+          letter-spacing="-1.5" filter="url(#greenGlow)">4.4BSD</text>
+  </g>
+
+  <path d="M90 176h380" stroke="#0f1419" stroke-width="8" stroke-linecap="round" opacity="0.85"/>
+  <path d="M90 176h380" stroke="url(#accentGradient)" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="280" cy="176" r="5" fill="#3fb950"/>
+</svg>
