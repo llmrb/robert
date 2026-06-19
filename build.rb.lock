@@ -2,7 +2,7 @@
 mruby:
   version: 4.0.0
   release_no: 40000
-  git_commit: 870a6b58ad91550917771a6232bb95c1684c98fb
+  git_commit: c86ef2b31b67fe48085793acd7739c2960e11370
 builds:
   robert:
     https://github.com/mrbgemz/mruby-tui:
