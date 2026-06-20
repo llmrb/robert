@@ -2,6 +2,41 @@
 
 ## Unreleased
 
+## v0.12.1
+
+Changes since `v0.12.0`.
+
+This release adds a new 4.4BSD wordmark logo, refactors the main event loop
+constants into the Robert module, adds module scaffolds for Tools and Widgets,
+compiles with PIE for improved security, and updates build dependencies
+including mruby-llm v0.1.0.beta.17, mruby-tui v0.7.0, mruby-tui-chat v0.4.0,
+and mruby-termbox2 v0.6.0.
+
+### Changed
+
+* **Refactor main loop constants into Robert module** <br>
+  Move `INPUT_POLL_MS` and `MAX_PEEK_EVENTS` into `Robert.poll_interval` and
+  `Robert.max_events`, and extract the help text into a dedicated method.
+
+* **Compile with PIE** <br>
+  Add `-fPIC` and `-pie` flags so the binary is built as a Position Independent
+  Executable.
+
+* **Update build dependencies** <br>
+  Bump mruby-llm to v0.1.0.beta.17, mruby-tui to v0.7.0, mruby-tui-chat to
+  v0.4.0, mruby-termbox2 to v0.6.0, and upgrade mruby.
+
+### Add
+
+* **Add 4.4BSD wordmark logo** <br>
+  Replace the old `robert.png` with an SVG `4.4bsd.svg` wordmark logo featuring
+  a Puffy-inspired terminal mascot. Update the README and documentation site to
+  use the new logo.
+
+* **Add Tools and Widgets module scaffolds** <br>
+  Add empty `Robert::Tools` and `Robert::Widgets` modules as namespace
+  scaffolds for future organisation.
+
 ## v0.12.0
 
 Changes since `v0.11.0`.
